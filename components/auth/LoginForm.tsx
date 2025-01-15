@@ -3,7 +3,14 @@ import { useForm } from "react-hook-form"
 import CardWrapper from "../CardWrapper"
 import { loginSchema, loginSchemaType } from "@/types/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Form, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form"
 import { Input } from "../ui/input"
 import { useState } from "react"
 import { Checkbox } from "../ui/checkbox"
@@ -29,48 +36,41 @@ export function LoginForm() {
         <form
           action=""
           onSubmit={form.handleSubmit(() => {})}
-          className="space-y-6"
+          className="space-y-4"
         >
           {/* Email Address Field */}
-          <FormItem>
-            <FormLabel>Email </FormLabel>
-            <FormField
-              name="email"
-              render={({ field }) => (
-                <Input {...field} placeholder="youremail@gmail.com" />
-              )}
-            />
-            <FormMessage />
-          </FormItem>
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email </FormLabel>
+                <FormControl>
+                  <Input {...field} placeholder="youremail@gmail.com" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           {/* Password Field  */}
           <div className="flex flex-col gap-2">
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormField
-                name="password"
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    type={`${(showPassword && "text") || "password"}`}
-                    placeholder="******"
-                  />
-                )}
-              />
-              <FormMessage />
-            </FormItem>
-            {/* Show password : Checkbox */}
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="show"
-                onCheckedChange={() => setShowPassword(!showPassword)}
-              />
-              <label
-                htmlFor="show"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Show Password
-              </label>
-            </div>
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      type={`${(showPassword && "text") || "password"}`}
+                      placeholder="******"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
 
           {/* Login Button */}
