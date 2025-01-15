@@ -7,7 +7,8 @@ import Github from "next-auth/providers/github"
 
 // desctructre and export required functions at once from NextAuth
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  //   adapter: DrizzleAdapter(db),
+  adapter: DrizzleAdapter(db), // set up the adapter
+  session: { strategy: "jwt" }, // set up the jwt strategies as well for adapter
   providers: [
     Google({
       clientId: process.env.GOGGLE_CLIENT_ID!,
