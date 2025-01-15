@@ -12,35 +12,52 @@ import {
   FormMessage,
 } from "../ui/form"
 import { Input } from "../ui/input"
-import { useState } from "react"
+import { useState, useTransition } from "react"
 import { Checkbox } from "../ui/checkbox"
 import { Button } from "../ui/button"
+import { signup } from "@/app/(auth)/_actions/signup"
+import { Success } from "../alert/success"
+import { Error } from "../alert/error"
+
+const initialValues = {
+  email: "",
+  password: "",
+  name: "",
+}
 
 export function SignupForm() {
   const [showPassword, setShowPassword] = useState<boolean>(false)
+  const [success, setSuccess] = useState<string>("")
+  const [error, setError] = useState<string>("")
+  const [isPending, startTransition] = useTransition()
+
   const form = useForm<signupSchemaType>({
     resolver: zodResolver(signupSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-      name: "",
-    },
+    defaultValues: initialValues,
   })
+
+  const onSubmit = (values: signupSchemaType) => {
+    setSuccess("")
+    setError("")
+    // const [serverState, signupAction, isPending] = useActionState(signup, null)
+
+    startTransition(async () => {
+      const { success, error } = await signup(values)
+      if (success) setSuccess(success)
+      if (error) setError(error)
+    })
+  }
+
   return (
     <CardWrapper
-      headerLabel={"Welcom to Ink Sprout! 🙏🏻"}
+      headerLabel={"Welcome to Ink Sprout! 🙏🏻"}
       backButtonLabel={"Go to login"}
       backButtonHref={"/login"}
       showSocials
     >
       <Form {...form}>
-        <form
-          action=""
-          onSubmit={form.handleSubmit(() => {})}
-          className="space-y-4"
-        >
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           {/* Name Field */}
-
           <FormField
             control={form.control}
             name="name"
@@ -54,14 +71,13 @@ export function SignupForm() {
               </FormItem>
             )}
           />
-          {/* Email Address Field */}
-
+          {/* Email Field */}
           <FormField
             control={form.control}
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email </FormLabel>
+                <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input {...field} placeholder="youremail@gmail.com" />
                 </FormControl>
@@ -69,7 +85,8 @@ export function SignupForm() {
               </FormItem>
             )}
           />
-          {/* Password Field  */}
+
+          {/* Password Field */}
           <div className="flex flex-col gap-2">
             <FormField
               control={form.control}
@@ -80,7 +97,7 @@ export function SignupForm() {
                   <FormControl>
                     <Input
                       {...field}
-                      type={`${(showPassword && "text") || "password"}`}
+                      type={showPassword ? "text" : "password"}
                       placeholder="******"
                     />
                   </FormControl>
@@ -88,7 +105,6 @@ export function SignupForm() {
                 </FormItem>
               )}
             />
-            {/* Show password : Checkbox */}
             <div className="flex items-center space-x-2">
               <Checkbox
                 id="show"
@@ -103,8 +119,12 @@ export function SignupForm() {
             </div>
           </div>
 
-          {/* Login Button */}
-          <Button className="w-full">Signup</Button>
+          {/* Alert : Success | Error */}
+          <Success message={success} />
+          <Error message={error} />
+          <Button className="w-full">
+            {(isPending && "Signing up...") || "Signup"}
+          </Button>
         </form>
       </Form>
     </CardWrapper>

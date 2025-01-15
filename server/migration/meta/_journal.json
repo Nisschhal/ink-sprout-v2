@@ -22,6 +22,20 @@
       "when": 1736160973919,
       "tag": "0002_strange_cerebro",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1736943613165,
+      "tag": "0003_perfect_lady_ursula",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1736943684370,
+      "tag": "0004_absurd_christian_walker",
+      "breakpoints": true
     }
   ]
 }

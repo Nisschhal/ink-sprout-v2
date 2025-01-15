@@ -7,6 +7,7 @@ import {
   serial,
   text,
   timestamp,
+  uniqueIndex,
 } from "drizzle-orm/pg-core"
 
 //-----Next-Auth---- docs might used AdapterAccoutType so rename it to AdapterAccount
@@ -55,4 +56,19 @@ export const accounts = pgTable(
       }),
     },
   ]
+)
+
+export const verificationTokens = pgTable(
+  "verification_tokens",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    email: text("email").notNull(),
+    token: text("token").notNull(),
+    expiresAt: timestamp("expires_at", { mode: "date" }).notNull(),
+  },
+  (table) => ({
+    uniqueToken: uniqueIndex("email_token_idx").on(table.email, table.token),
+  })
 )

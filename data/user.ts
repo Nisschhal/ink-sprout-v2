@@ -11,3 +11,13 @@ export const getUserById = async (id: string) => {
     return null
   }
 }
+export const getUserByEmail = async (email: string) => {
+  try {
+    const user = await db.select().from(users).where(eq(users.email, email))
+    console.log({ user })
+    return user[0]
+  } catch (error) {
+    console.log("Error while getting user by Id", error)
+    return null
+  }
+}
