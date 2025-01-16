@@ -1,3 +1,4 @@
+"use client"
 import React from "react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
@@ -8,12 +9,27 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useCurrentUser } from "@/hooks/user"
 import { FaUser } from "react-icons/fa"
 import { LogoutButton } from "@/components/auth/LogoutButton"
+import { useRouter } from "next/navigation"
+import { LogIn } from "lucide-react"
 
-export function UserButton() {
-  const user = useCurrentUser()
+export function UserButton({ user }: { user: any }) {
+  const router = useRouter()
+  if (!user)
+    return (
+      <>
+        <div
+          onClick={() => router.push("/auth/login")}
+          className="bg-primary flex items-center gap-1.5 p-1 rounded-md"
+        >
+          <span>
+            <LogIn className="w-4 h-4" />
+          </span>
+          Login
+        </div>
+      </>
+    )
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="border-none outline-none">

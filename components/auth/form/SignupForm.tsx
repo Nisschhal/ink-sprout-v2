@@ -1,6 +1,6 @@
 "use client"
 import { useForm } from "react-hook-form"
-import CardWrapper from "../CardWrapper"
+import CardWrapper from "../../CardWrapper"
 import { signupSchema, signupSchemaType } from "@/types/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
@@ -10,14 +10,13 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form"
-import { Input } from "../ui/input"
+} from "../../ui/form"
+import { Input } from "../../ui/input"
 import { useState, useTransition } from "react"
-import { Checkbox } from "../ui/checkbox"
-import { Button } from "../ui/button"
-import { signup } from "@/app/(auth)/_actions/signup"
-import { Success } from "../alert/success"
-import { Error } from "../alert/error"
+import { Checkbox } from "../../ui/checkbox"
+import { Button } from "../../ui/button"
+import { signup } from "@/app/auth/_actions/signup"
+import { Error, Success } from "../../alert"
 
 const initialValues = {
   email: "",
@@ -52,7 +51,7 @@ export function SignupForm() {
     <CardWrapper
       headerLabel={"Welcome to Ink Sprout! 🙏🏻"}
       backButtonLabel={"Go to login"}
-      backButtonHref={"/login"}
+      backButtonHref={"/auth/login"}
       showSocials
     >
       <Form {...form}>
@@ -123,7 +122,17 @@ export function SignupForm() {
           <Success message={success} />
           <Error message={error} />
           <Button className="w-full">
-            {(isPending && "Signing up...") || "Signup"}
+            {(isPending && (
+              <>
+                <span
+                  className="w-5 h-5 border-2 border-blue-500
+                        border-t-transparent rounded-full 
+                        animate-spin"
+                />
+                Signing up...
+              </>
+            )) ||
+              "Signup"}
           </Button>
         </form>
       </Form>

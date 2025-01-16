@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import { SessionProvider } from "next-auth/react"
-import { auth } from "@/auth"
+import { auth } from "@/server/auth"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,6 +19,8 @@ export const metadata: Metadata = {
   description: "Place to sprout you inks",
 }
 
+export const dynamic = "force-dynamic"
+
 export default async function RootLayout({
   children,
   reuse,
@@ -27,6 +29,7 @@ export default async function RootLayout({
   reuse: React.ReactNode
 }>) {
   const session = await auth()
+  console.log("logged in ", { session })
   return (
     <SessionProvider session={session}>
       <html lang="en">

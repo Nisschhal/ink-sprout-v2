@@ -10,7 +10,7 @@ declare module "next-auth" {
   interface Session {
     user: DefaultSession["user"] & {
       role: "user" | "admin" | null
-      twoFactorEnabled: boolean | null
+      isTwoFactorEnabled: boolean | null
       image: string | null
     }
   }
@@ -19,7 +19,7 @@ declare module "next-auth" {
 declare module "next-auth/jwt" {
   interface JWT {
     role: "user" | "admin" | null
-    twoFactorEnabled: boolean | null
+    isTwoFactorEnabled: boolean | null
     image: string | null
   }
 }

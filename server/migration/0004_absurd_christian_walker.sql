@@ -1,1 +1,0 @@
-ALTER TABLE "verification_tokens" ALTER COLUMN "id" DROP DEFAULT;

@@ -6,6 +6,7 @@ import { generateVerificationToken } from "@/lib/tokens"
 import { signupSchema, signupSchemaType } from "@/types/schemas"
 import { db } from "@/server"
 import { users } from "@/server/db/schema"
+import { sendVerificationEmail } from "@/lib/mails"
 
 // import { sendVerificationEmail } from "@/lib/mail"
 
@@ -13,7 +14,7 @@ export const signup = async (values: z.infer<typeof signupSchema>) => {
   const validatedFields = signupSchema.safeParse(values)
 
   if (!validatedFields.success) {
-    return { error: "Invalide Credentials! 😑" }
+    return { error: "Invalide fields! 😑" }
   }
 
   const { email, password, name } = validatedFields.data
@@ -30,11 +31,11 @@ export const signup = async (values: z.infer<typeof signupSchema>) => {
     name,
   })
 
-  // TODO: send verification token
   const verficationToken = await generateVerificationToken(email)
   console.log({ verficationToken })
+  // TODO: send verification token
   // TODO: send email with verification link
-  //   await sendVerificationEmail(verficationToken.email, verficationToken.token)
+  await sendVerificationEmail(verficationToken.email, verficationToken.token)
 
-  return { success: "Confirmation sent to email! 📮" }
+  return { success: "Confirmation sent to email! 📩" }
 }

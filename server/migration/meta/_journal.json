@@ -5,36 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1736153455431,
-      "tag": "0000_overconfident_wendell_rand",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1736160889072,
-      "tag": "0001_robust_stranger",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1736160973919,
-      "tag": "0002_strange_cerebro",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1736943613165,
-      "tag": "0003_perfect_lady_ursula",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1736943684370,
-      "tag": "0004_absurd_christian_walker",
+      "when": 1736948926360,
+      "tag": "0000_tense_agent_zero",
       "breakpoints": true
     }
   ]

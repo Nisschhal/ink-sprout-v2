@@ -1,4 +1,8 @@
+//-----Next-Auth---- docs might used AdapterAccoutType so rename it to AdapterAccount
+import type { AdapterAccount } from "next-auth/adapters"
+
 import {
+  AnyPgColumn,
   boolean,
   integer,
   pgEnum,
@@ -10,26 +14,21 @@ import {
   uniqueIndex,
 } from "drizzle-orm/pg-core"
 
-//-----Next-Auth---- docs might used AdapterAccoutType so rename it to AdapterAccount
-import type { AdapterAccount } from "next-auth/adapters"
-
 // Defining an Enum for user roles (user, admin)
 export const RoleEnum = pgEnum("roles", ["user", "admin"])
 
 // USER MODEL: Represents users in the system
 export const users = pgTable("user", {
-  // Unique identifier for the user, generated using crypto.randomUUID
   id: text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  name: text("name"), // User's name
-  password: text("password"), // User's password
-  email: text("email").unique(), // Unique email for the user
-  emailVerified: timestamp("emailVerified", { mode: "date" }), // Timestamp when the user's email was verified
-  image: text("image"), // URL for user's profile image
-  twoFactorEnabled: boolean("twoFactorEnabled").default(false), // Boolean to check if 2FA is enabled
-  role: RoleEnum("roles").default("user"), // User's role (user or admin)
-  customerId: text("customerId"), // Customer ID associated with an external service
+  name: text("name"),
+  password: text("password"),
+  email: text("email").unique(),
+  emailVerified: timestamp("emailVerified", { mode: "date" }),
+  image: text("image"),
+  isTwoFactorEnabled: boolean("isTwoFactorEnabled").default(false),
+  role: RoleEnum("roles").default("user"),
 })
 
 export const accounts = pgTable(
@@ -58,6 +57,7 @@ export const accounts = pgTable(
   ]
 )
 
+// Verification token
 export const verificationTokens = pgTable(
   "verification_tokens",
   {
@@ -69,6 +69,62 @@ export const verificationTokens = pgTable(
     expiresAt: timestamp("expires_at", { mode: "date" }).notNull(),
   },
   (table) => ({
-    uniqueToken: uniqueIndex("email_token_idx").on(table.email, table.token),
+    uniqueToken: uniqueIndex("unique_email_token_idx").on(
+      table.email,
+      table.token
+    ), // Renamed index
+  })
+)
+
+// Password Reset token
+export const passwordResetTokens = pgTable(
+  "password_reset_tokens",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    email: text("email").notNull(),
+    token: text("token").notNull(),
+    expiresAt: timestamp("expires_at", { mode: "date" }).notNull(),
+  },
+  (table) => ({
+    uniqueToken: uniqueIndex("unique_email_reset_token_idx").on(
+      table.email,
+      table.token
+    ), // Renamed index
+  })
+)
+
+// Two Factor token
+export const twoFactorCode = pgTable(
+  "two_factor_codes",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    email: text("email").notNull(),
+    code: text("code").notNull(),
+    expiresAt: timestamp("expires_at", { mode: "date" }).notNull(),
+  },
+  (table) => ({
+    uniqueToken: uniqueIndex("unique_email_code_idx").on(
+      table.email,
+      table.code
+    ), // Renamed index
+  })
+)
+
+export const twoFactorConfirmations = pgTable(
+  "two_factor_confirmations",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: text("userId")
+      .notNull()
+      .references((): AnyPgColumn => users.id, { onDelete: "cascade" }),
+  },
+  (table) => ({
+    uniqueUserId: uniqueIndex("unique_user_id").on(table.userId),
   })
 )

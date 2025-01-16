@@ -4,9 +4,9 @@ import { LogOutIcon } from "lucide-react"
 import { signOut } from "next-auth/react"
 
 export function LogoutButton() {
-  const onClick = async (e: React.MouseEvent) => {
+  const onClick = (e: React.MouseEvent) => {
     e.preventDefault() // Prevent form submission
-    await signOut() // Call the server-side logout logic
+    signOut() // Call the server-side logout logic
   }
 
   return (
