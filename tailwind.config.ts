@@ -12,10 +12,6 @@ export default withUt({
     extend: {
       container: {
         center: true,
-        padding: {
-          DEFAULT: "1rem",
-          sm: "2rem",
-        },
       },
       colors: {
         background: "hsl(var(--background))",

@@ -4,7 +4,7 @@ import "./globals.css"
 import { SessionProvider } from "next-auth/react"
 import { auth } from "@/server/auth"
 import { ThemeProvider } from "@/components/providers/theme-provider"
-import NavBar from "@/components/navigation/NavBar"
+import NavBar from "@/components/navigations/NavBar"
 // uploadthing for not showing readiness of state
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin"
 import { extractRouterConfig } from "uploadthing/server"
