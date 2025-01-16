@@ -4,14 +4,14 @@ import {
   DEFAULT_LOGIN_REDIRECT,
   apiAuthPrefix,
   authRoutes,
+  isApiUploadethingPrefix,
   publicRoutes,
 } from "@/routes"
 
 // invoke this function whenever routes matches to given regex
 export default auth((req) => {
   const { nextUrl } = req
-  console.log(req.nextUrl.pathname)
-  console.log(!!req.auth, "====authenticated")
+
   const isLoggedIn = !!req.auth
 
   // set differnt routes according to different usecases
@@ -29,6 +29,9 @@ export default auth((req) => {
 
   // 1
   if (isApiAuthRoute) {
+    return
+  }
+  if (isApiUploadethingPrefix) {
     return
   }
 

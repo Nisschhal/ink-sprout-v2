@@ -17,14 +17,26 @@ import { useTheme } from "next-themes"
 import DarkModeSwitch from "../DarkModeSwitch"
 import { RxMoon } from "react-icons/rx"
 import { cn } from "@/lib/utils"
+import Image from "next/image"
 export const AvaterIcon = ({ user }: { user: User }) => {
   return (
     <Avatar>
-      <AvatarImage src={user?.image || ""} />
-      <AvatarFallback className="bg-primary/25 ">
-        {/* <FaUser /> */}
-        <div className="font-bold">{user.name?.charAt(0).toUpperCase()}</div>
-      </AvatarFallback>
+      {user.image ? (
+        <div className="w-10 h-10 overflow-hidden rounded-full">
+          <Image
+            src={user.image}
+            width={42}
+            height={42}
+            className="object-cover w-full h-full"
+            alt="User Image"
+          />
+        </div>
+      ) : (
+        <AvatarFallback className="bg-primary/25 ">
+          {/* <FaUser /> */}
+          <div className="font-bold">{user.name?.charAt(0).toUpperCase()}</div>
+        </AvatarFallback>
+      )}
     </Avatar>
   )
 }
@@ -79,14 +91,20 @@ export function UserButton({ user }: { user: any }) {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
 
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="group font-medium cursor-pointer">
+        <DropdownMenuItem
+          className="group font-medium cursor-pointer"
+          onClick={() => router.push("  /dashboard/orders")}
+        >
           <TruckIcon
             width={14}
             className="mr-2 opacity-70 group-hover:opacity-100 group-hover:translate-x-3 duration-500 ease-in-out transition-all"
           />
           My Orders
         </DropdownMenuItem>
-        <DropdownMenuItem className="group font-medium cursor-pointer">
+        <DropdownMenuItem
+          className="group font-medium cursor-pointer"
+          onClick={() => router.push("/dashboard/settings")}
+        >
           <Settings
             width={14}
             className="mr-2 opacity-70 group-hover:opacity-100 group-hover:rotate-180 duration-500 ease-in-out transition-all"

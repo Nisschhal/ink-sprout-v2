@@ -29,6 +29,7 @@ export const authRoutes: string[] = [
  */
 
 export const apiAuthPrefix: string = "/api/auth"
+export const isApiUploadethingPrefix: string = "/api/uploadthing"
 
 /**
  * The default redirect path after logging in

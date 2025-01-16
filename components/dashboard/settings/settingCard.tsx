@@ -28,6 +28,7 @@ import { settings } from "@/app/dashboard/_actions/settings"
 import { Button } from "@/components/ui/button"
 import { Error, Success } from "@/components/alert"
 import { Switch } from "@/components/ui/switch"
+import { UploadButton } from "@/utils/uploadthing"
 
 type SettingsForm = {
   session: Session
@@ -130,17 +131,25 @@ export default function SettingsCard({ session: { user } }: SettingsForm) {
                       </div>
                     )}
                     {form.getValues("image") && (
-                      <Image
-                        src={form.getValues("image")!}
-                        width={42}
-                        height={42}
-                        className="rounded-full"
-                        alt="User Image"
-                      />
+                      <div className="w-10 h-10 overflow-hidden rounded-full">
+                        <Image
+                          src={form.getValues("image")!}
+                          width={42}
+                          height={42}
+                          className="object-cover w-full h-full"
+                          alt="User Image"
+                        />
+                      </div>
                     )}
-                    {/* <UploadButton
+                    <UploadButton
                       className="scale-75 ut-button:ring-primary  ut-label:bg-red-50  ut-button:bg-primary/75  hover:ut-button:bg-primary/100 ut:button:transition-all ut-button:duration-500  ut-label:hidden ut-allowed-content:hidden"
                       endpoint="avatarUploader"
+                      content={{
+                        button({ ready }) {
+                          if (ready) return <div>Change Avatar</div>
+                          return <div>Uploading...</div>
+                        },
+                      }}
                       onUploadBegin={() => {
                         setAvatarUploading(true)
                       }}
@@ -153,17 +162,12 @@ export default function SettingsCard({ session: { user } }: SettingsForm) {
                         return
                       }}
                       onClientUploadComplete={(res) => {
+                        console.log({ res }, "working ")
                         form.setValue("image", res[0].url!)
                         setAvatarUploading(false)
                         return
                       }}
-                      content={{
-                        button({ ready }) {
-                          if (ready) return <div>Change Avatar</div>
-                          return <div>Uploading...</div>
-                        },
-                      }}
-                    /> */}
+                    />
                   </div>
                   <FormControl>
                     <Input

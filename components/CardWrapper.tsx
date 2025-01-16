@@ -29,7 +29,7 @@ function CardWrapper({
   showSocials,
 }: CardWrapperProps) {
   return (
-    <Card className="w-[400px] shadow-md">
+    <Card className="mx-auto w-[400px] shadow-md">
       <CardHeader>
         <CardTitle className="text-center">{headerLabel}</CardTitle>
       </CardHeader>

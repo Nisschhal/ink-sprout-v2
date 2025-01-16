@@ -5,7 +5,13 @@ import { SessionProvider } from "next-auth/react"
 import { auth } from "@/server/auth"
 import { ThemeProvider } from "@/components/providers/theme-provider"
 import NavBar from "@/components/navigation/NavBar"
-
+// uploadthing for not showing readiness of state
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin"
+import { extractRouterConfig } from "uploadthing/server"
+import { cn } from "@/lib/utils"
+import { ourFileRouter } from "./api/uploadthing/core"
+// Toaster
+import { Toaster } from "sonner"
 const roboto = Roboto({
   weight: ["400", "500", "700", "900"],
   subsets: ["latin"],
@@ -25,10 +31,18 @@ export default async function RootLayout({
     <SessionProvider session={session}>
       {/* // as docs suggests use suppressHydrationWarning for hydration warning */}
       <html lang="en" suppressHydrationWarning>
-        <body className={`${roboto.className} antialiased`}>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <body className={cn(`${roboto.className}, antialiased `)}>
+          <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
             <div className="flex-grow px-6 md:px-12 max-w-8xl mx-auto">
               <NavBar />
+              <Toaster />
               {children}
             </div>
           </ThemeProvider>

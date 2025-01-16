@@ -39,7 +39,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           .select()
           .from(accounts)
           .where(eq(accounts.userId, existingUser.id))
-        console.log({ existingAccount })
+
         // Add additional attributes to the  token
         token.isOAuth = !!existingAccount[0] // Check if the account is OAuth
         token.name = existingUser.name
