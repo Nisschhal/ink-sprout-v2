@@ -15,6 +15,7 @@ import type { User } from "next-auth"
 import { signOut } from "next-auth/react"
 import { useTheme } from "next-themes"
 import DarkModeSwitch from "../DarkModeSwitch"
+import { RxMoon } from "react-icons/rx"
 export const AvaterIcon = ({ user }: { user: User }) => {
   return (
     <Avatar>
@@ -27,7 +28,7 @@ export const AvaterIcon = ({ user }: { user: User }) => {
   )
 }
 
-export function UserButton({ user }: { user: User }) {
+export function UserButton({ user }: { user: any }) {
   const { setTheme, themes, theme, systemTheme } = useTheme()
   function toggleTheme(e: MouseEvent) {
     e.preventDefault()
@@ -97,8 +98,9 @@ export function UserButton({ user }: { user: User }) {
           className="font-medium cursor-pointer"
           onClick={(e) => toggleTheme(e)}
         >
+          {theme == "light" ? <Sun className=" rounded-full" /> : <RxMoon />}{" "}
+          {theme == "light" ? "Light" : "Dark"} Mode
           <DarkModeSwitch theme={theme} />
-          Theme
         </DropdownMenuItem>
         <DropdownMenuItem
           className="group font-medium cursor-pointer focus:bg-destructive/30 duration-500 transition-all"

@@ -10,19 +10,19 @@ export default function DarkModeSwitch({
 }) {
   return (
     <div
-      className={cn("flex items-center w-10 p-0.5  border rounded-full", {
+      className={cn("flex items-center w-10  border rounded-full", {
         "bg-primary/10 flex-start": theme == "light",
-        "justify-end bg-gray-700": theme == "dark",
+        "justify-end bg-primary": theme == "dark",
       })}
     >
       {theme == "light" ? (
-        <motion.span layout>
-          <Sun className=" rounded-full border" />
-        </motion.span>
+        <motion.div layout>
+          <div className="bg-white rounded-full h-5 w-5 shadow-lg"></div>
+        </motion.div>
       ) : (
-        <motion.span layout>
-          <RxMoon width={14} />
-        </motion.span>
+        <motion.div layout>
+          <div className="bg-white rounded-full h-5 w-5 shadow-lg"></div>
+        </motion.div>
       )}
     </div>
   )
