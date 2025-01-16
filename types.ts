@@ -12,6 +12,7 @@ declare module "next-auth" {
       role: "user" | "admin" | null
       isTwoFactorEnabled: boolean | null
       image: string | null
+      isOAuth: boolean | null
     }
   }
 }
@@ -21,5 +22,6 @@ declare module "next-auth/jwt" {
     role: "user" | "admin" | null
     isTwoFactorEnabled: boolean | null
     image: string | null
+    isOAuth: boolean | null
   }
 }

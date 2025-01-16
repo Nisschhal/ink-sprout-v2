@@ -19,9 +19,7 @@ export const authRoutes: string[] = [
   "/auth/login",
   "/auth/signup",
   "/auth/error",
-
   "/dashboard",
-  "/",
 ]
 
 /**
@@ -36,4 +34,4 @@ export const apiAuthPrefix: string = "/api/auth"
  * The default redirect path after logging in
  * @type {string}
  */
-export const DEFAULT_LOGIN_REDIRECT: string = "/"
+export const DEFAULT_LOGIN_REDIRECT: string = "/dashboard/settings"

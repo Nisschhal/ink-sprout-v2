@@ -4,7 +4,7 @@ import { db } from "@/server"
 import Google from "next-auth/providers/google"
 import Github from "next-auth/providers/github"
 import { getUserByEmail, getUserById } from "../data/user"
-import { users } from "./db/schema"
+import { accounts, users } from "./db/schema"
 import { eq } from "drizzle-orm"
 import Credentails from "next-auth/providers/credentials"
 import { loginSchema } from "@/types/schemas"
@@ -28,14 +28,25 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     async jwt({ token }) {
       try {
-        if (!token.sub) return token
+        if (!token.sub) return token // Return early if no user ID (sub) is present
 
+        // Fetch the user from the database
         const existingUser = await getUserById(token.sub)
-        if (!existingUser) return token
+        if (!existingUser) return token // Return token if user does not exist
 
+        // Fetch the account associated with the user
+        const existingAccount = await db
+          .select()
+          .from(accounts)
+          .where(eq(accounts.userId, existingUser.id))
+        console.log({ existingAccount })
+        // Add additional attributes to the  token
+        token.isOAuth = !!existingAccount[0] // Check if the account is OAuth
+        token.name = existingUser.name
+        token.email = existingUser.email
+        token.image = existingUser.image
         token.role = existingUser.role
         token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled
-        token.image = existingUser.image
 
         return token
       } catch (error) {
@@ -45,12 +56,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
     async session({ session, token }) {
       try {
-        if (!token.sub) return session
-        if (!session.user) return session
+        if (!token.sub && !session) return session
 
+        // Attach additional attributes
+        session.user.id = token.sub!
+        session.user.name = token.name
+        session.user.email = token.email!
+        session.user.isOAuth = token.isOAuth
+        session.user.image = token.image
         session.user.role = token.role
         session.user.isTwoFactorEnabled = token.isTwoFactorEnabled
-        session.user.image = token.image
+
         return session
       } catch (error) {
         console.error("Session Callback Error:", error)
