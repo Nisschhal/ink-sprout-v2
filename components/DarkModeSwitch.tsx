@@ -10,7 +10,7 @@ export default function DarkModeSwitch({
 }) {
   return (
     <div
-      className={cn("flex items-center w-10  border rounded-full", {
+      className={cn("flex items-center w-10   rounded-full", {
         "bg-primary/10 flex-start": theme == "light",
         "justify-end bg-primary": theme == "dark",
       })}

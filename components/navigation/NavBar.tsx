@@ -4,7 +4,6 @@ import { currentUser } from "@/lib/session-user"
 
 export default async function NavBar() {
   const user = await currentUser()
-  console.log({ user }, "navbar")
   return (
     <header className="py-8">
       <nav className="container">

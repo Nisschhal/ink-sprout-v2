@@ -79,7 +79,6 @@ export const login = async (
   }
 
   try {
-    console.log("entered")
     await signIn("credentials", {
       email,
       password,

@@ -10,8 +10,8 @@ import {
 // invoke this function whenever routes matches to given regex
 export default auth((req) => {
   const { nextUrl } = req
-
-  console.log(req.auth, "====authenticated")
+  console.log(req.nextUrl.pathname)
+  console.log(!!req.auth, "====authenticated")
   const isLoggedIn = !!req.auth
 
   // set differnt routes according to different usecases
@@ -34,7 +34,7 @@ export default auth((req) => {
 
   // 2.
   if (isAuthRoute) {
-    if (isLoggedIn) {
+    if (!isLoggedIn) {
       return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl))
     }
     return
