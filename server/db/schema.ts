@@ -8,6 +8,7 @@ import {
   pgEnum,
   pgTable,
   primaryKey,
+  real,
   serial,
   text,
   timestamp,
@@ -128,3 +129,13 @@ export const twoFactorConfirmations = pgTable(
     uniqueUserId: uniqueIndex("unique_user_id").on(table.userId),
   })
 )
+
+// Product Schemas
+// PRODUCT MODEL: Represents a product available in the store
+export const products = pgTable("products", {
+  id: serial("id").primaryKey(), // Unique identifier for the product
+  description: text("description").notNull(), // Product description
+  title: text("title").notNull(), // Product title
+  created: timestamp("created").defaultNow(), // Timestamp when the product was created
+  price: real("price").notNull(), // Product price
+})
