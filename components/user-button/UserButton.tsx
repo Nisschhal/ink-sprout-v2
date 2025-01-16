@@ -1,5 +1,5 @@
 "use client"
-import React from "react"
+import React, { useEffect } from "react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   DropdownMenu,
@@ -9,14 +9,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { FaUser } from "react-icons/fa"
-import { LogoutButton } from "@/components/auth/LogoutButton"
 import { useRouter } from "next/navigation"
 import { LogIn, LogOut, Moon, Settings, Sun, TruckIcon } from "lucide-react"
-import type { Session, User } from "next-auth"
-import Image from "next/image"
+import type { User } from "next-auth"
 import { signOut } from "next-auth/react"
-
+import { useTheme } from "next-themes"
+import DarkModeSwitch from "../DarkModeSwitch"
 export const AvaterIcon = ({ user }: { user: User }) => {
   return (
     <Avatar>
@@ -30,7 +28,26 @@ export const AvaterIcon = ({ user }: { user: User }) => {
 }
 
 export function UserButton({ user }: { user: User }) {
+  const { setTheme, themes, theme, systemTheme } = useTheme()
+  function toggleTheme(e: MouseEvent) {
+    e.preventDefault()
+    e.stopPropagation()
+    console.log(theme)
+    if (theme === "light") {
+      setTheme("dark")
+    } else {
+      setTheme("light")
+    }
+  }
+
   const router = useRouter()
+  useEffect(() => {
+    if (systemTheme) {
+      console.log("clieck")
+      setTheme(systemTheme)
+    }
+  }, [systemTheme])
+
   if (!user)
     return (
       <>
@@ -76,12 +93,12 @@ export function UserButton({ user }: { user: User }) {
           />
           Settings
         </DropdownMenuItem>
-        <DropdownMenuItem className="font-medium cursor-pointer">
-          <div className="flex">
-            <Sun />
-            <Moon />
-            Theme
-          </div>
+        <DropdownMenuItem
+          className="font-medium cursor-pointer"
+          onClick={(e) => toggleTheme(e)}
+        >
+          <DarkModeSwitch theme={theme} />
+          Theme
         </DropdownMenuItem>
         <DropdownMenuItem
           className="group font-medium cursor-pointer focus:bg-destructive/30 duration-500 transition-all"
