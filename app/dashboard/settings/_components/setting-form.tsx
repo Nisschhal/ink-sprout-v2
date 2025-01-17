@@ -22,9 +22,12 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import Image from "next/image"
-import { useEffect, useState, useTransition } from "react"
-import { SettingSchema, SettingSchemaType } from "@/types/settings-schema"
-import { settings } from "@/app/dashboard/_actions/settings"
+import { useState, useTransition } from "react"
+import {
+  SettingSchema,
+  SettingSchemaType,
+} from "@/app/dashboard/settings/_schema/settings-schema"
+import { settings } from "@/app/dashboard/settings/_actions/settings"
 import { Button } from "@/components/ui/button"
 import { Error, Success } from "@/components/alert"
 import { Switch } from "@/components/ui/switch"
@@ -34,7 +37,7 @@ type SettingsForm = {
   session: Session
 }
 
-export default function SettingsCard({ session: { user } }: SettingsForm) {
+export default function SettingsForm({ session: { user } }: SettingsForm) {
   // get the state for error || success || avataruploading
   const [error, setError] = useState<string | undefined>()
   const [success, setSuccess] = useState<string | undefined>()

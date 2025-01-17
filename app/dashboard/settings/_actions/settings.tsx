@@ -4,7 +4,10 @@ import { auth } from "@/server/auth"
 import { eq } from "drizzle-orm"
 import bcrypt from "bcryptjs"
 import { revalidatePath } from "next/cache"
-import { SettingSchema, SettingSchemaType } from "@/types/settings-schema"
+import {
+  SettingSchema,
+  SettingSchemaType,
+} from "@/app/dashboard/settings/_schema/settings-schema"
 import { db } from "@/server"
 import { users } from "@/server/db/schema"
 import { getUserById } from "@/data/user"
@@ -69,7 +72,7 @@ export const settings = async (values: SettingSchemaType) => {
   }
 
   // UPDATE THE USER USING FORM VALUES WHERE USERS.ID IS FOUND DBUSER.ID
-  const updatedUser = await db
+  await db
     .update(users)
     .set({
       isTwoFactorEnabled: values.isTwoFactorEnabled,

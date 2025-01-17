@@ -91,11 +91,13 @@ const sendEmail = async (
 // Verification Email
 export async function sendVerificationEmail(email: string, token: string) {
   const info = await sendEmail(email, token)
+  return info
 }
 
 // Reset Email
 export async function sendResetEmail(email: string, token: string) {
   const info = await sendEmail(email, token, EmailType.Reset)
+  return info
 }
 
 // Two factor email

@@ -36,7 +36,7 @@ export default function VerifyEmail() {
   useEffect(() => {
     if (!token) return
     verify()
-  }, [token])
+  }, [token, verify])
 
   return (
     <CardWrapper

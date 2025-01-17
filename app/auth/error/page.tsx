@@ -1,6 +1,5 @@
 import CardWrapper from "@/components/CardWrapper"
 import React from "react"
-import { FaExclamation } from "react-icons/fa"
 import { HiOutlineExclamationTriangle } from "react-icons/hi2"
 
 export default function ErrorCard() {

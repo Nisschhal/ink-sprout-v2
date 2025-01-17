@@ -54,7 +54,7 @@ export default function ProductForm() {
 
   useEffect(() => {
     checkProduct() // Load product data if editing
-  }, [])
+  }, [id])
 
   // Form setup using react-hook-form and zod for validation
   const form = useForm<ProductSchemaType>({
@@ -64,7 +64,7 @@ export default function ProductForm() {
       description: "",
       price: 0,
     },
-    mode: "onChange", // Validate on change for better user experience
+    mode: "onChange", // Validate input as user types or onchanges inputs
   })
 
   // Safe action to handle form submission

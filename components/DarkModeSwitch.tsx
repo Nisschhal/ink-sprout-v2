@@ -1,8 +1,6 @@
 import { cn } from "@/lib/utils"
 import React from "react"
 import { motion } from "motion/react"
-import { Sun } from "lucide-react"
-import { RxMoon } from "react-icons/rx"
 export default function DarkModeSwitch({
   theme,
 }: {

@@ -1,5 +1,4 @@
 "use server"
-
 import { signIn } from "@/server/auth"
 import {
   deleteTwoFactorCodeById,
@@ -17,9 +16,6 @@ import {
 import { loginSchema, loginSchemaType } from "@/types/schemas"
 // import { DEFAULT_LOGIN_REDIRECT } from "@/routes"
 import { AuthError } from "next-auth"
-import * as z from "zod"
-import { error } from "console"
-import { revalidatePath } from "next/cache"
 
 export const login = async (
   values: loginSchemaType

@@ -4,6 +4,7 @@ import type { AdapterAccount } from "next-auth/adapters"
 import {
   AnyPgColumn,
   boolean,
+  index,
   integer,
   pgEnum,
   pgTable,
@@ -14,6 +15,7 @@ import {
   timestamp,
   uniqueIndex,
 } from "drizzle-orm/pg-core"
+import { relations } from "drizzle-orm"
 
 // Defining an Enum for user roles (user, admin)
 export const RoleEnum = pgEnum("roles", ["user", "admin"])
@@ -130,8 +132,9 @@ export const twoFactorConfirmations = pgTable(
   })
 )
 
-// Product Schemas
-// PRODUCT MODEL: Represents a product available in the store
+// Product ======= Variant ========= Reviews ==========
+
+// ------ PRODUCT MODEL: Represents a product available in the store
 export const products = pgTable("products", {
   id: serial("id").primaryKey(), // Unique identifier for the product
   description: text("description").notNull(), // Product description
@@ -139,3 +142,112 @@ export const products = pgTable("products", {
   created: timestamp("created").defaultNow(), // Timestamp when the product was created
   price: real("price").notNull(), // Product price
 })
+
+// --------- PRODUCT VARIANTS MODEL: Represents different variations of a product (e.g., color, size)
+export const productVariants = pgTable("productVariants", {
+  id: serial("id").primaryKey(), // Unique identifier for the variant
+  color: text("color").notNull(), // Color of the variant
+  productType: text("productType").notNull(), // Type of product variant (e.g., size, style)
+  updated: timestamp("updated").defaultNow(), // Timestamp when the variant was last updated
+  productId: serial("productId")
+    .notNull()
+    .references(() => products.id, { onDelete: "cascade" }), // References the product this variant belongs to
+})
+
+// --------- Variant Images Model: Stores images associated with a product variant
+export const variantImages = pgTable("variantImages", {
+  id: serial("id").primaryKey(), // Unique identifier for the image
+  url: text("url").notNull(), // Image URL
+  size: real("size").notNull(), // Image size
+  name: text("name").notNull(), // Image file name
+  order: real("order").notNull(), // Order in which the image should be displayed
+  variantId: serial("variantId")
+    .notNull()
+    .references(() => productVariants.id, { onDelete: "cascade" }), // References the variant this image belongs to
+})
+
+// --------- Variant Tags Model: Stores tags associated with a product variant
+export const variantTags = pgTable("variantTags", {
+  id: serial("id").primaryKey(), // Unique identifier for the tag
+  tag: text("tag").notNull(), // Tag associated with the variant
+  variantId: serial("variantId")
+    .notNull()
+    .references(() => productVariants.id, { onDelete: "cascade" }), // References the variant the tag belongs to
+})
+
+// ~~~~~~~~~~~~~~~~  Relations ~~~~~~~~~~~~~~~~~ //
+
+// PRODUCTS RELATION to reviews and variants (one-to-many relation)
+export const productRelations = relations(products, ({ many }) => ({
+  productVariants: many(productVariants, { relationName: "productVariants" }), // One product has many variants
+  reviews: many(reviews, { relationName: "reviews" }), // One product has many reviews
+}))
+
+// PRODUCT VARIANTS RELATION to product and variant images/tags (one-to-one and one-to-many relations)
+export const productVariantsRelations = relations(
+  productVariants,
+  ({ many, one }) => ({
+    products: one(products, {
+      relationName: "productVariants", // One product variant corresponds to one product
+      fields: [productVariants.productId],
+      references: [products.id],
+    }),
+    variantImages: many(variantImages, { relationName: "variantImages" }), // One variant can have many images
+    variantTags: many(variantTags, { relationName: "variantTags" }), // One variant can have many tags
+  })
+)
+
+// Variant Images Relation to productVariant (one-to-one relation)
+export const variantImageRelations = relations(variantImages, ({ one }) => ({
+  productVariants: one(productVariants, {
+    relationName: "variantImages",
+    fields: [variantImages.variantId],
+    references: [productVariants.id],
+  }),
+}))
+
+// Variant Tags Relation to productVariant (one-to-one relation)
+export const variantTagsRelation = relations(variantTags, ({ one }) => ({
+  productVariants: one(productVariants, {
+    relationName: "variantTags",
+    fields: [variantTags.variantId],
+    references: [productVariants.id],
+  }),
+}))
+
+// ---------  REVIEW MODEL: Represents a review for a product
+export const reviews = pgTable(
+  "reviews",
+  {
+    id: serial("id").primaryKey(), // Unique identifier for the review
+    rating: real("rating").notNull(), // Rating value (e.g., 1-5 stars)
+    comment: text("comment").notNull(), // Review comment
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }), // Reference to the user who left the review
+    productId: serial("productId")
+      .notNull()
+      .references(() => products.id, { onDelete: "cascade" }), // Reference to the product being reviewed
+    created: timestamp("created").defaultNow(), // Timestamp when the review was created
+  },
+  (table) => {
+    return {
+      productIdx: index("productIdx").on(table.productId), // Index for productId
+      userIdx: index("userIdx").on(table.userId), // Index for userId
+    }
+  }
+)
+
+// ~~~~~~~~~~~~~ Review Relation to User and Product ~~~~~~~~~~~~~~`
+export const reviewRelations = relations(reviews, ({ one }) => ({
+  users: one(users, {
+    fields: [reviews.userId],
+    references: [users.id],
+    relationName: "user_reviews", // Relation between review and user
+  }),
+  product: one(products, {
+    fields: [reviews.productId],
+    references: [products.id],
+    relationName: "reviews", // Relation between review and product
+  }),
+}))

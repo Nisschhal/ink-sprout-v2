@@ -11,7 +11,7 @@ import { extractRouterConfig } from "uploadthing/server"
 import { cn } from "@/lib/utils"
 import { ourFileRouter } from "./api/uploadthing/core"
 // Toaster
-import { Toaster } from "sonner"
+import Toasty from "@/components/ui/toaster"
 const roboto = Roboto({
   weight: ["400", "500", "700", "900"],
   subsets: ["latin"],
@@ -42,7 +42,7 @@ export default async function RootLayout({
           >
             <div className="flex-grow px-6 md:px-12 max-w-8xl mx-auto">
               <NavBar />
-              <Toaster />
+              <Toasty />
               {children}
             </div>
           </ThemeProvider>

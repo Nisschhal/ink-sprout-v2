@@ -1,6 +1,6 @@
 "use client"
 import React, { MouseEvent, useEffect } from "react"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useRouter } from "next/navigation"
-import { LogIn, LogOut, Moon, Settings, Sun, TruckIcon } from "lucide-react"
+import { LogIn, LogOut, Settings, Sun, TruckIcon } from "lucide-react"
 import type { User } from "next-auth"
 import { signOut } from "next-auth/react"
 import { useTheme } from "next-themes"
@@ -18,6 +18,8 @@ import DarkModeSwitch from "../DarkModeSwitch"
 import { RxMoon } from "react-icons/rx"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
+
+// Reusable AvatarIcon
 export const AvaterIcon = ({ user }: { user: User }) => {
   return (
     <Avatar>
@@ -42,7 +44,10 @@ export const AvaterIcon = ({ user }: { user: User }) => {
 }
 
 export function UserButton({ user }: { user: any }) {
-  const { setTheme, themes, theme, systemTheme } = useTheme()
+  // get the next-them
+  const { setTheme, theme, systemTheme } = useTheme()
+
+  // Dark mode toggle
   function toggleTheme(e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) {
     e.preventDefault()
     e.stopPropagation()
@@ -55,26 +60,23 @@ export function UserButton({ user }: { user: any }) {
   }
 
   const router = useRouter()
+
+  // check for the system them and set that
   useEffect(() => {
     if (systemTheme) {
-      console.log("clieck")
       setTheme(systemTheme)
     }
-  }, [systemTheme])
+  }, [systemTheme, setTheme])
 
   if (!user)
     return (
-      <>
-        <div
-          onClick={() => router.push("/auth/login")}
-          className="bg-primary flex items-center gap-1.5 p-1 rounded-md"
-        >
-          <span>
-            <LogIn className="w-4 h-4" />
-          </span>
-          Login
-        </div>
-      </>
+      <div
+        onClick={() => router.push("/auth/login")}
+        className="flex gap-1 items-center bg-primary px-2 py-1 rounded-md text-white cursor-pointer hover:opacity-80 shadow-lg"
+      >
+        <LogIn className="w-4 h-4" />
+        Login
+      </div>
     )
   return (
     <DropdownMenu>
