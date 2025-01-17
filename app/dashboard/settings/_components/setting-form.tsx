@@ -88,7 +88,7 @@ export default function SettingsForm({ session: { user } }: SettingsForm) {
   }
 
   return (
-    <Card>
+    <Card className="border-none shadow-none">
       <CardHeader>
         <CardTitle>Your Settings</CardTitle>
         <CardDescription>Update your account settings</CardDescription>

@@ -100,7 +100,7 @@ export default function ProductForm() {
   }
 
   return (
-    <Card>
+    <Card className="border-none shadow-none">
       <CardHeader className="flex flex-col gap-1">
         <CardTitle>{id ? "Edit Product" : "Add New Product"}</CardTitle>
         <CardDescription>

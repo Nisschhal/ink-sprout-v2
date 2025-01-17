@@ -11,7 +11,7 @@ export default function Toaster() {
     if (systemTheme) {
       setTheme(systemTheme)
     }
-  }, [systemTheme, setTheme])
+  }, [systemTheme])
 
   return (
     <Toasty

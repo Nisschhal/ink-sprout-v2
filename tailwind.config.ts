@@ -10,8 +10,20 @@ export default withUt({
   ],
   theme: {
     extend: {
-      container: {
-        center: true,
+      keyframes: {
+        "caret-blink": {
+          "0%,70%,100%": { opacity: "1" },
+          "20%,50%": { opacity: "0" },
+        },
+      },
+      maxWidth: {
+        "8xl": "88rem",
+      },
+      minHeight: {
+        "50vh": "50vh",
+      },
+      animation: {
+        "caret-blink": "caret-blink 1.25s ease-out infinite",
       },
       colors: {
         background: "hsl(var(--background))",

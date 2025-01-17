@@ -51,6 +51,7 @@ export function UserButton({ user }: { user: any }) {
   function toggleTheme(e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) {
     e.preventDefault()
     e.stopPropagation()
+    console.log("workded")
     console.log(theme)
     if (theme === "light") {
       setTheme("dark")
@@ -66,7 +67,7 @@ export function UserButton({ user }: { user: any }) {
     if (systemTheme) {
       setTheme(systemTheme)
     }
-  }, [systemTheme, setTheme])
+  }, [systemTheme])
 
   if (!user)
     return (
@@ -114,7 +115,7 @@ export function UserButton({ user }: { user: any }) {
           Settings
         </DropdownMenuItem>
         <DropdownMenuItem
-          className="mr-2 group duration-500 ease-in-out transition-all"
+          className="mr-2 group duration-500 ease-in-out transition-all cursor-pointer"
           onClick={(e) => toggleTheme(e)}
         >
           <span className="opacity-70 group-hover:opacity-100">

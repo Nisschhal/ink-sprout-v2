@@ -58,8 +58,8 @@ export default async function Products() {
   if (!dataTable) throw new Error("No product Found!")
 
   return (
-    <div className="rounded-md border">
-      <Card>
+    <div className="rounded-md mt-4 ">
+      <Card className="border-none shadow-none">
         <CardHeader>
           <CardTitle>Your Products</CardTitle>
           <CardDescription>
