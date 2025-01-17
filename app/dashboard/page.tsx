@@ -1,5 +1,5 @@
-import React from "react"
+import { redirect } from "next/navigation"
 
-export default function DashboardRoute() {
-  return <div>Dashboard</div>
+export default function DashboardPage() {
+  redirect("/dashboard/orders")
 }
