@@ -41,13 +41,13 @@ export default function Products({ variants }: ProductTypes) {
       <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-12 lg:grid-cols-3 mt-8">
         {Array.from({ length: 6 }).map((_, index) => (
           <div key={index} className="animate-pulse space-y-4">
-            <div className="bg-muted-foreground rounded-md h-48 w-full"></div>
+            <div className="bg-muted-foreground/30 rounded-md h-48 w-full"></div>
             <div className="flex justify-between items-center">
               <div className="space-y-2">
-                <div className="bg-muted-foreground rounded h-4 w-32"></div>
-                <div className="bg-muted-foreground rounded h-4 w-20"></div>
+                <div className="bg-muted-foreground/30 rounded h-4 w-32"></div>
+                <div className="bg-muted-foreground/30 rounded h-4 w-20"></div>
               </div>
-              <div className="bg-muted-foreground rounded h-6 w-16"></div>
+              <div className="bg-muted-foreground/30 rounded h-6 w-16"></div>
             </div>
           </div>
         ))}

@@ -27,6 +27,7 @@ import { useAction } from "next-safe-action/hooks"
 import { toast } from "sonner"
 import { reviewSchema, ReviewSchemaType } from "./_schema/review-shema"
 import { addReview } from "./_action/add-review"
+import { Textarea } from "@/components/ui/textarea"
 export function ReviewsForm({ productId }: { productId: number }) {
   const searchParams = useSearchParams()
   const variantId = Number(searchParams.get("id"))
@@ -60,12 +61,12 @@ export function ReviewsForm({ productId }: { productId: number }) {
     },
 
     onError(error) {
-      toast.error("Sorry, couldn't added your review!")
+      toast.error("Sorry, couldn't added your review! 🙁")
     },
   })
 
   // 2. Define a submit handler.
-  function onSubmit(values: zReviewSchema) {
+  function onSubmit(values: ReviewSchemaType) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     execute({ comment: values.comment, rating: values.rating, productId })
@@ -123,6 +124,8 @@ export function ReviewsForm({ productId }: { productId: number }) {
                           <Star
                             key={value}
                             onClick={() =>
+                              // add shouldValidate to true for instant render of clicked | filled start
+                              // shouldValidate false might show no effect when click
                               form.setValue("rating", value, {
                                 shouldValidate: true,
                               })

@@ -19,7 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 
@@ -32,10 +32,15 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
-  // filtering search
   const [sorting, setSorting] = useState<SortingState>([])
-
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [isLoading, setIsLoading] = useState(true) // Initial loading state
+
+  // Simulate a 2-second loading delay
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 2000)
+    return () => clearTimeout(timer) // Cleanup the timeout on unmount
+  }, [])
 
   const table = useReactTable({
     data,
@@ -43,7 +48,6 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getPaginationRowModel: getPaginationRowModel(),
-
     getFilteredRowModel: getFilteredRowModel(),
     state: {
       sorting,
@@ -61,13 +65,14 @@ export function DataTable<TData, TValue>({
             table.getColumn("title")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
+          disabled={isLoading} // Disable input while loading
         />
         <div className="flex items-center justify-end space-x-2 py-4">
           <Button
             variant="outline"
             size="sm"
             onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
+            disabled={isLoading || !table.getCanPreviousPage()}
           >
             Previous
           </Button>
@@ -75,7 +80,7 @@ export function DataTable<TData, TValue>({
             variant="outline"
             size="sm"
             onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
+            disabled={isLoading || !table.getCanNextPage()}
           >
             Next
           </Button>
@@ -85,23 +90,33 @@ export function DataTable<TData, TValue>({
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                )
-              })}
+              {headerGroup.headers.map((header) => (
+                <TableHead key={header.id}>
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                </TableHead>
+              ))}
             </TableRow>
           ))}
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows?.length ? (
+          {isLoading ? (
+            // Render Skeleton Rows
+            Array.from({ length: 5 }).map((_, rowIndex) => (
+              <TableRow key={rowIndex}>
+                {columns.map((_, colIndex) => (
+                  <TableCell key={colIndex}>
+                    <div className="animate-pulse h-4 bg-muted-foreground/30 rounded"></div>
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))
+          ) : table.getRowModel().rows?.length ? (
+            // Render Actual Rows
             table.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}

@@ -12,6 +12,7 @@ export default function ReviewChart({
 }: {
   reviews: ReviewsWithUser[]
 }) {
+  // get the array of no. of start per item | product
   const getRatingByStars = useMemo(() => {
     // Step 1: Create an array with 5 elements, all initialized to 0, to store the count of ratings for each star (1 to 5 stars).
     const ratingValues = Array.from({ length: 5 }, () => 0)

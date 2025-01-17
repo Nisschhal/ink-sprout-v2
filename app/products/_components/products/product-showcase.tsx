@@ -17,6 +17,7 @@ export default function ProductShowcase({
 }: {
   variants: VariantsWithImagesTags[]
 }) {
+  // get the carousel api to get index
   const [api, setApi] = useState<CarouselApi>()
 
   // state is list because api on 'slideInView' event gives the list of index of image
@@ -24,10 +25,12 @@ export default function ProductShowcase({
   const searchParams = useSearchParams()
   const selectedColor = searchParams.get("type") || variants[0].productType
 
+  //
   useEffect(() => {
     if (!api) return
+    // listen for slidesInView event to track index
     api.on("slidesInView", (e) => {
-      console.log(e.slidesInView(), "slices")
+      // console.log(e.slidesInView(), "slices") // view the active index
       setActiveThumbnail(e.slidesInView())
     })
   }, [api])
@@ -38,8 +41,10 @@ export default function ProductShowcase({
   }
 
   return (
+    // loop carousel
     <Carousel setApi={setApi} opts={{ loop: true }}>
       <CarouselContent>
+        {/* // only select the variant which has productType, aka selected product color */}
         {variants.map(
           (variant) =>
             variant.productType === selectedColor &&
