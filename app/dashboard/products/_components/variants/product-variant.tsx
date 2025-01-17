@@ -1,6 +1,11 @@
-"use client"
-
-import { VariantsWithImagesTags } from "@/lib/infer-type"
+import { useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useAction } from "next-safe-action/hooks"
+import { toast } from "sonner"
+import { variantSchema, VariantSchemaType } from "../../_schemas/variant-schema"
+import { createVariant } from "../../_actions/variant/create-variant"
+import { deleteVariant } from "../../_actions/variant/delete-variant"
 import {
   Dialog,
   DialogContent,
@@ -17,18 +22,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import InputTags from "./input-tags"
 import VariantImages from "./variant-images"
-import { useAction } from "next-safe-action/hooks"
-import { toast } from "sonner"
-import { useEffect, useState } from "react"
-import { variantSchema, VariantSchemaType } from "../../_schemas/variant-schema"
-import { createVariant } from "../../_actions/variant/create-variant"
-import { deleteVariant } from "../../_actions/variant/delete-variant"
 
 type VariantProps = {
   children: React.ReactNode
@@ -59,39 +56,28 @@ export default function ProductVariant({
   const [open, setOpen] = useState(false)
 
   const setEdit = () => {
-    // form is new so reset() and return
     if (!editMode) {
       form.reset()
       return
     }
-    // if the variant form is editMode get set the incoming data from the variant onto the corresponding form fields
     if (editMode && variant) {
       form.setValue("editMode", true)
       form.setValue("id", variant.id)
       form.setValue("productId", variant.productId)
       form.setValue("productType", variant.productType)
       form.setValue("color", variant.color)
-
-      // array the variantTags
       form.setValue(
         "tags",
         variant.variantTags.map((tag) => tag.tag)
       )
-      // array the variantImages
-      form.setValue(
-        "variantImages",
-
-        variant.variantImages
-      )
+      form.setValue("variantImages", variant.variantImages)
     }
   }
 
-  // load up the form fields if editMode
   useEffect(() => {
     setEdit()
   }, [variant])
 
-  // spin up the server action
   const { execute, status } = useAction(createVariant, {
     onExecute() {
       toast.info(`${editMode ? "Updating" : "Creating new"} variant...`, {
@@ -105,6 +91,7 @@ export default function ProductVariant({
       }
       if (data?.success) {
         toast.success(data.success)
+        form.reset() // Reset the form after a successful create or update
       }
     },
   })
@@ -120,17 +107,16 @@ export default function ProductVariant({
       }
       if (data?.success) {
         toast.success(data.success)
+        form.reset() // Reset the form after a successful delete
       }
     },
   })
 
-  // submit the form with values to server action
   function onSubmit(values: VariantSchemaType) {
     execute(values)
   }
 
   return (
-    // pass the mannual open state and the setter function to onOpenChange
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>{children}</DialogTrigger>
       <DialogContent className="lg:max-w-screen-lg overflow-y-scroll max-h-[660px]  ">
@@ -143,7 +129,6 @@ export default function ProductVariant({
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            {/* Variant Title Field */}
             <FormField
               control={form.control}
               name="productType"
@@ -156,13 +141,10 @@ export default function ProductVariant({
                       {...field}
                     />
                   </FormControl>
-
                   <FormMessage />
                 </FormItem>
               )}
             />
-
-            {/* Varint Color Field */}
             <FormField
               control={form.control}
               name="color"
@@ -172,13 +154,10 @@ export default function ProductVariant({
                   <FormControl>
                     <Input type="color" {...field} />
                   </FormControl>
-
                   <FormMessage />
                 </FormItem>
               )}
             />
-
-            {/* Variant Tag Field */}
             <FormField
               control={form.control}
               name="tags"
@@ -192,11 +171,7 @@ export default function ProductVariant({
                 </FormItem>
               )}
             />
-
-            {/* Variant Image Custom Field */}
             <VariantImages />
-
-            {/* DELETE AND UPDATE BUTTON */}
             <div className="flex gap-4 items-center justify-center">
               {editMode && variant && (
                 <Button

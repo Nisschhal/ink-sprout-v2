@@ -52,26 +52,20 @@ export default function Sales({ totalOrders }: { totalOrders: TotalOrders[] }) {
                 <TableRow key={id}>
                   <TableCell className="font-medium">
                     {orders.users.image && orders.users.name ? (
-                      <Avatar>
-                        {orders.users.image ? (
-                          <div className="w-10 h-10 overflow-hidden rounded-full">
-                            <Image
-                              src={orders.users.image}
-                              width={42}
-                              height={42}
-                              className="object-cover w-full h-full"
-                              alt="User Image"
-                            />
-                          </div>
-                        ) : (
-                          <AvatarFallback className="bg-primary/25 ">
-                            {/* <FaUser /> */}
-                            <div className="font-bold">
-                              {orders.users.name?.charAt(0).toUpperCase()}
-                            </div>
-                          </AvatarFallback>
-                        )}
-                      </Avatar>
+                      <div className="flex gap-2 w-32 items-center ">
+                        <div className="w-10 h-10 overflow-hidden rounded-full">
+                          <Image
+                            src={orders.users.image}
+                            width={42}
+                            height={42}
+                            className="object-cover w-full h-full"
+                            alt="User Image"
+                          />
+                        </div>
+                        <p className="text-sm font-medium">
+                          {orders.users.name}
+                        </p>
+                      </div>
                     ) : (
                       <div className="flex gap-2 items-center ">
                         <p className="text-sm font-medium">
