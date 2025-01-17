@@ -1,13 +1,13 @@
-"use client";
+"use client"
 
-import { useCartStore } from "@/lib/client-store";
-import Link from "next/link";
-import { Button } from "../ui/button";
-import { motion } from "motion/react";
-import orderedPackage from "@/public/order-package.json";
-import Lottie from "react-lottie";
+import { useCartStore } from "@/lib/client-store"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { motion } from "motion/react"
+import orderedPackage from "@/public/order-package.json"
+import Lottie from "react-lottie"
 export default function OrderConfirmed() {
-  const { setCheckoutProgress, setCartOpen } = useCartStore();
+  const { setCheckoutProgress, setCartOpen } = useCartStore()
   return (
     <div className="flex flex-col items-center gap-4">
       {/* Lottie Animation */}
@@ -28,13 +28,13 @@ export default function OrderConfirmed() {
           variant={"secondary"}
           onClick={() => {
             // Get the Drawer back to cart page
-            setCheckoutProgress("cart-page");
-            setCartOpen(false);
+            setCheckoutProgress("cart-page")
+            setCartOpen(false)
           }}
         >
           View your order
         </Button>
       </Link>
     </div>
-  );
+  )
 }

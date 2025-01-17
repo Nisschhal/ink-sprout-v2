@@ -27,7 +27,7 @@ import { useAction } from "next-safe-action/hooks"
 import { toast } from "sonner"
 import { useEffect, useState } from "react"
 import { variantSchema, VariantSchemaType } from "../../_schemas/variant-schema"
-import { createVariant } from "../../_actions/variant/ceate-variant"
+import { createVariant } from "../../_actions/variant/create-variant"
 import { deleteVariant } from "../../_actions/variant/delete-variant"
 
 type VariantProps = {

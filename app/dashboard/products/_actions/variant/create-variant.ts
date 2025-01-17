@@ -16,12 +16,11 @@ const action = createSafeActionClient()
 
 // get the algolio import
 import { algoliasearch } from "algoliasearch"
-import { title } from "process"
 
 // create a algolio client
 const client = algoliasearch(
   process.env.NEXT_PUBLIC_ALGOLIA_ID!,
-  process.env.ALGOLIA_WRITE_API_KEY!
+  process.env.NEXT_PUBLIC_ALGOLIA_WRITE_API_KEY!
 )
 
 // create index for algolio to add products

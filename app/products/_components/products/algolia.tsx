@@ -47,9 +47,9 @@ export default function AlgoliaSearch() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
-              className="absolute w-full mt-2  max-h-96 overflow-y-auto "
+              className="absolute w-full mt-2  max-h-96 overflow-y-auto z-50"
             >
-              <Hits hitComponent={Hit} className="rounded-md" />
+              <Hits hitComponent={Hit} />
               {/* Renders search results */}
             </MotionCard>
           )}
@@ -92,6 +92,7 @@ function Hit({
       {/* Navigates to a product detail page with query parameters */}
       <Link
         href={`/product/${hit.objectID}?id=${hit.objectID}&productId=${hit.id}&price=${hit.price}&title=${hit.title}&type=${hit.productType}&image=${hit.variantImages}`}
+        className="z-10"
       >
         <div className="flex w-full gap-12 items-center justify-between">
           {/* Displays the product image */}

@@ -1,12 +1,12 @@
-"use client";
+"use client"
 
-import { useCartStore } from "@/lib/client-store";
-import { motion } from "motion/react";
-import { DrawerDescription, DrawerTitle } from "../ui/drawer";
-import { ArrowLeft } from "lucide-react";
+import { useCartStore } from "@/lib/client-store"
+import { motion } from "motion/react"
+import { DrawerDescription, DrawerTitle } from "@/components/ui/drawer"
+import { ArrowLeft } from "lucide-react"
 
 export default function CartMessage() {
-  const { checkoutProgress, setCheckoutProgress } = useCartStore();
+  const { checkoutProgress, setCheckoutProgress } = useCartStore()
 
   return (
     <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }}>
@@ -29,5 +29,5 @@ export default function CartMessage() {
           "You will recieve an email with your receipt!"}
       </DrawerDescription>
     </motion.div>
-  );
+  )
 }

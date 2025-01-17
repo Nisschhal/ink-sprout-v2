@@ -1,22 +1,23 @@
-"use client";
+"use client"
 
-import { useCartStore } from "@/lib/client-store";
-import { ShoppingBag } from "lucide-react";
+import { useCartStore } from "@/lib/client-store"
+import { ShoppingBag } from "lucide-react"
+
+import { AnimatePresence, motion } from "motion/react"
+import CartItems from "./cart-item"
+import CartMessage from "./cart-message"
+import Payment from "./payment"
+import OrderConfirmed from "./order-confirmation"
+import CartProgress from "./cart-progress"
 import {
   Drawer,
   DrawerContent,
   DrawerHeader,
   DrawerTrigger,
-} from "../ui/drawer";
-import { AnimatePresence, motion } from "motion/react";
-import CartItems from "./cart-item";
-import CartMessage from "./cart-message";
-import Payment from "./payment";
-import OrderConfirmed from "./order-confirmation";
-import CartProgress from "./cart-progress";
+} from "@/components/ui/drawer"
 
 export default function CartDrawer() {
-  const { cart, checkoutProgress, cartOpen, setCartOpen } = useCartStore();
+  const { cart, checkoutProgress, cartOpen, setCartOpen } = useCartStore()
 
   return (
     <Drawer open={cartOpen} onOpenChange={setCartOpen}>
@@ -47,5 +48,5 @@ export default function CartDrawer() {
         </div>
       </DrawerContent>
     </Drawer>
-  );
+  )
 }

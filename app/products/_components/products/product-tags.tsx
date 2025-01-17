@@ -16,7 +16,7 @@ export default function ProductTags() {
     if (!tag) router.push("/")
   }
   return (
-    <div className="flex gap-4 items-center justify-center pt-3">
+    <div className=" flex gap-4 z-10 items-center justify-center pt-3">
       <Badge
         className={cn(
           "cursor-pointer bg-black hover:bg-black/75  hover:opacity-100 my-2",
@@ -28,7 +28,7 @@ export default function ProductTags() {
       </Badge>
       <Badge
         className={cn(
-          "cursor-pointer  bg-blue-500 hover:bg-blue-600   hover:opacity-100 my-2",
+          "z-10 cursor-pointer  bg-blue-500 hover:bg-blue-600   hover:opacity-100 my-2",
           tag && tag === "blue" ? "opacity-100" : "opacity-50"
         )}
         onClick={() => setFilter("blue")}

@@ -1,10 +1,10 @@
 "use client";
 import { ReviewsWithUser } from "@/lib/infer-type";
 import { motion } from "motion/react";
-import { Card } from "../ui/card";
 import Image from "next/image";
 import { formatDistance, subDays } from "date-fns";
 import Stars from "./stars";
+import { Card } from "@/components/ui/card";
 export default function Review({ reviews }: { reviews: ReviewsWithUser[] }) {
   return (
     <motion.div className="flex flex-col gap-4">

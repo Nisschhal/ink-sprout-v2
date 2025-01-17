@@ -1,21 +1,21 @@
-"use server";
+"use server"
 
-import Stripe from "stripe";
-import { createSafeActionClient } from "next-safe-action";
-import { paymentIntentSchema } from "@/types/paymentIntentSchema";
-import { auth } from "@/server/auth";
+import Stripe from "stripe"
+import { createSafeActionClient } from "next-safe-action"
+import { auth } from "@/server/auth"
+import { paymentIntentSchema } from "../_schema/payment-intent-schema"
 
 // init Stripe with secret key
-const stripe = new Stripe(process.env.STRIPE_SECRET!);
+const stripe = new Stripe(process.env.STRIPE_SECRET!)
 // init server action
-const action = createSafeActionClient();
+const action = createSafeActionClient()
 
 export const createPaymentIntent = action
   .schema(paymentIntentSchema)
   .action(async ({ parsedInput: { amount, cart, currency } }) => {
-    const session = await auth();
-    if (!session) return { error: "Please login to continue!" };
-    if (!amount) return { error: "No Product to checkout!" };
+    const session = await auth()
+    if (!session) return { error: "Please login to continue!" }
+    if (!amount) return { error: "No Product to checkout!" }
 
     const paymentIntent = await stripe.paymentIntents.create({
       amount,
@@ -24,7 +24,7 @@ export const createPaymentIntent = action
       metadata: {
         cart: JSON.stringify(cart),
       },
-    });
+    })
 
     return {
       success: {
@@ -33,5 +33,5 @@ export const createPaymentIntent = action
         clientSecretId: paymentIntent.client_secret,
         user: session.user.email,
       },
-    };
-  });
+    }
+  })

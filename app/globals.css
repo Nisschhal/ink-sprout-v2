@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -68,7 +72,14 @@
   }
 }
 
-/* // for upload thing button */
 [data-ut-element="button"][data-state="uploading"]::after {
   @apply bg-primary/50;
+}
+/* Custom CSS Needed for TipTap PlaceHolder */
+.tiptap p.is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
 }
