@@ -21,7 +21,7 @@ export const deleteProduct = action
 
       revalidatePath("/dashboard/products")
       return {
-        success: `Product ${deleteProduct[0].title} deleted Successfully!`,
+        success: `Product "${deleteProduct[0].title}" deleted Successfully!`,
       }
     } catch (error) {
       console.log("error while deleting product", error)

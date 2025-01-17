@@ -16,6 +16,7 @@ const action = createSafeActionClient()
 
 // get the algolio import
 import { algoliasearch } from "algoliasearch"
+import { title } from "process"
 
 // create a algolio client
 const client = algoliasearch(
@@ -93,7 +94,9 @@ export const createVariant = action
 
           // once everything done revalidate the cache
           revalidatePath("/dashboard/products")
-          return { success: `Updated ${productType} Successfully!` }
+          return {
+            success: `Variant updated successfully! 🎉`,
+          }
         }
 
         // CREATE NEW VARIANT
@@ -138,7 +141,7 @@ export const createVariant = action
             })
           }
           revalidatePath("/dashboard/products")
-          return { success: `Created ${productType} Successfully!` }
+          return { success: `Variant created successfully! 🎉` }
         }
       } catch (error) {
         console.log("error while creating or updating variant", error)

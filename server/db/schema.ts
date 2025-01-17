@@ -251,3 +251,67 @@ export const reviewRelations = relations(reviews, ({ one }) => ({
     relationName: "reviews", // Relation between review and product
   }),
 }))
+
+// ORDER MODEL: Represents an order placed by a user
+
+//------------- MODEL Order
+export const orders = pgTable("order", {
+  id: serial("id").primaryKey(), // Generates a unique id for each order, set as the primary key.
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }), // Links the order to a specific user by referencing their id. Ensures that if the user is deleted, all related orders are also deleted (cascade).
+  total: real("total").notNull(), // Represents the total amount of the order, marked as not nullable to ensure every order has a total amount.
+  status: text("status").notNull(), // Indicates the status of the order (e.g., "pending", "completed"), ensuring that every order has a valid status.
+  created: timestamp("created").defaultNow(), // Automatically stores the timestamp when the order is created, defaulting to the current date and time.
+  receiptURL: text("receiptURL"), // Stores an optional URL for the order's receipt.
+  paymentIntentId: text("paymentIntentId"), // Holds the unique ID related to the payment intent (used by services like Stripe to track payments).
+})
+
+//Relation with User and orderProduct
+export const ordersRelations = relations(orders, ({ one, many }) => ({
+  users: one(users, {
+    fields: [orders.userId],
+    references: [users.id],
+    relationName: "user_orders", // Creates a one-to-one relationship with the users table, ensuring that each order is linked to a single user.
+  }),
+  orderProduct: many(orderProduct, {
+    relationName: "orderProduct", // Creates a one-to-many relationship with the orderProduct table, allowing multiple products per order.
+  }),
+}))
+
+// -------- MODEL OrderProduct
+// get the product, and productVariant based on their id
+export const orderProduct = pgTable("orderProduct", {
+  id: serial("id").primaryKey(), // Generates a unique id for each order-product entry, set as the primary key.
+  quantity: integer("quantity").notNull(), // Represents the quantity of the product ordered, marked as not nullable to ensure each entry specifies a quantity.
+  productVariantId: serial("productVariantId")
+    .notNull()
+    .references(() => productVariants.id, { onDelete: "cascade" }), // Links to the specific product variant ordered. Cascade delete ensures the entry is removed if the product variant is deleted.
+  orderId: serial("orderId")
+    .notNull()
+    .references(() => orders.id, { onDelete: "cascade" }), // References the order that the product belongs to. Cascade delete ensures the entry is removed if the order is deleted.
+  productId: serial("productId")
+    .notNull()
+    .references(() => products.id, { onDelete: "cascade" }), // References the product associated with the order-product entry. Cascade delete ensures the entry is removed if the product is deleted.
+})
+
+// OrderProduct Relation to order, products, and productVariant
+export const OrderProductRelations = relations(orderProduct, ({ one }) => ({
+  orders: one(orders, {
+    fields: [orderProduct.orderId],
+    references: [orders.id],
+    relationName: "orderProduct", // Creates a one-to-one relationship with the orders table, linking each order-product entry to a specific order.
+  }),
+  products: one(products, {
+    fields: [orderProduct.productId],
+    references: [products.id],
+    relationName: "products", // Creates a one-to-one relationship with the products table, linking each order-product entry to a specific product.
+  }),
+  productVariants: one(productVariants, {
+    fields: [orderProduct.productVariantId],
+    references: [productVariants.id],
+    relationName: "productVariants", // Creates a one-to-one relationship with the productVariants table, linking each order-product entry to a specific product variant.
+  }),
+}))
+
+// ---------------------

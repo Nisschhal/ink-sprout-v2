@@ -89,12 +89,12 @@ export default function ProductVariant({
   // load up the form fields if editMode
   useEffect(() => {
     setEdit()
-  }, [variant, setEdit])
+  }, [variant])
 
   // spin up the server action
   const { execute, status } = useAction(createVariant, {
     onExecute() {
-      toast.info(`${editMode ? "Updating" : "Creating"} variant...`, {
+      toast.info(`${editMode ? "Updating" : "Creating new"} variant...`, {
         duration: 2000,
       })
       setOpen(false)
@@ -111,7 +111,7 @@ export default function ProductVariant({
 
   const variantAction = useAction(deleteVariant, {
     onExecute() {
-      toast.info("Deleting variant", { duration: 2000 })
+      toast.info("Deleting variant...", { duration: 2000 })
       setOpen(false)
     },
     onSuccess({ data }) {

@@ -5,6 +5,7 @@
  */
 export const publicRoutes: string[] = [
   "/",
+  "/products",
   "/auth/verify-email",
   "/auth/reset",
   "/auth/new-password",
