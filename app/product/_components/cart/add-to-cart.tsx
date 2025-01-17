@@ -1,29 +1,29 @@
-"use client";
+"use client"
 
-import { useCartStore } from "@/lib/client-store";
-import { useState } from "react";
-import { Button } from "../ui/button";
-import { Minus, Plus } from "lucide-react";
-import { redirect, useSearchParams } from "next/navigation";
-import { toast } from "sonner";
+import { useCartStore } from "@/lib/client-store"
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Minus, Plus } from "lucide-react"
+import { redirect, useSearchParams } from "next/navigation"
+import { toast } from "sonner"
 
 export default function AddCart() {
-  const { addToCart } = useCartStore();
-  const [quantity, setQuantity] = useState(1);
+  const { addToCart } = useCartStore()
+  const [quantity, setQuantity] = useState(1)
 
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams()
 
   // get the cart properties form url
-  const variantId = Number(searchParams.get("id"));
-  const productId = Number(searchParams.get("productId"));
-  const title = searchParams.get("title");
-  const type = searchParams.get("type");
-  const image = searchParams.get("image");
-  const price = Number(searchParams.get("price"));
+  const variantId = Number(searchParams.get("id"))
+  const productId = Number(searchParams.get("productId"))
+  const title = searchParams.get("title")
+  const type = searchParams.get("type")
+  const image = searchParams.get("image")
+  const price = Number(searchParams.get("price"))
 
   if (!variantId || !productId || !title || !type || !image || !price) {
-    toast.error("Product not Found!");
-    return redirect("/");
+    toast.error("Product not Found!")
+    return redirect("/")
   }
 
   return (
@@ -33,7 +33,7 @@ export default function AddCart() {
           variant={"secondary"}
           className="text-primary"
           onClick={() => {
-            if (quantity > 1) setQuantity(quantity - 1);
+            if (quantity > 1) setQuantity(quantity - 1)
           }}
         >
           <Minus size={18} strokeWidth={3} />
@@ -49,19 +49,19 @@ export default function AddCart() {
       </div>
       <Button
         onClick={() => {
-          console.log("clicked!");
+          console.log("clicked!")
           addToCart({
             id: productId,
             image,
             name: title,
             price,
             variant: { quantity, variantId },
-          });
-          toast.success(`Item  ${title} ${type} added to Cart! 👌🏼`);
+          })
+          toast.success(`Item  ${title} ${type} added to Cart! 👌🏼`)
         }}
       >
         Add to Cart
       </Button>
     </>
-  );
+  )
 }

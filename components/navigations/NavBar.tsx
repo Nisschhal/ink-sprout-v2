@@ -2,7 +2,7 @@ import Link from "next/link"
 import { UserButton } from "../user-button/UserButton"
 import { currentUser } from "@/lib/session-user"
 import { Logo } from "./Logo"
-import CartDrawer from "@/app/products/_components/cart/cart-drawer"
+import CartDrawer from "@/app/product/_components/cart/cart-drawer"
 
 export default async function NavBar() {
   const user = await currentUser()

@@ -1,7 +1,7 @@
 import { db } from "@/server"
-import ProductTags from "./products/_components/products/product-tags"
-import Products from "./products/_components/products/products"
-import AlgoliaSearch from "./products/_components/products/algolia"
+import ProductTags from "./product/_components/products/product-tags"
+import Products from "./product/_components/products/products"
+import AlgoliaSearch from "./product/_components/products/algolia"
 
 // revalidate cache on each 2
 export const revalidate = 60 * 60

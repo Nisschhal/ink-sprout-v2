@@ -2,7 +2,7 @@
 
 import { useCartStore } from "@/lib/client-store"
 import { useState } from "react"
-import { Button } from "../ui/button"
+import { Button } from "@/components/ui/button"
 import { Minus, Plus } from "lucide-react"
 import { redirect, useSearchParams } from "next/navigation"
 import { toast } from "sonner"
