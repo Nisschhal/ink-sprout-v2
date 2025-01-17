@@ -64,7 +64,7 @@ export default function Products({ variants }: ProductTypes) {
     )
   }
   return (
-    <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-12 lg:grid-cols-3">
+    <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-12 lg:grid-cols-3 drop-shadow-lg-lg">
       {filteredVariants?.map((variant) => (
         <Link
           className="py-2"
@@ -79,7 +79,7 @@ export default function Products({ variants }: ProductTypes) {
             height={480}
             loading="lazy"
           />
-          <div className="flex justify-between">
+          <div className="flex justify-between mt-2">
             <div className="font-medium">
               <h2>{variant.products.title}</h2>
               <p className="text-sm text-muted-foreground">

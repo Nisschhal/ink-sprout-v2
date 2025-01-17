@@ -14,6 +14,7 @@ export default function AlgoliaSearch() {
   const [active, setActive] = useState(false)
   // Create Memo motionCart
   const MotionCard = useMemo(() => motion(Card), [])
+
   return (
     <InstantSearchNext
       // According to docs, if any error when loading into another page or unmounted
@@ -25,16 +26,16 @@ export default function AlgoliaSearch() {
       searchClient={searchClient}
     >
       {/* Search Box */}
-      <div className="relative">
+      <div className="relative w-full">
         <SearchBox
           // When search bar is focused
           onFocus={() => setActive(true)}
-          //  when search bar is not focused
+          // When search bar is not focused
           onBlur={() => setActive(false)}
           placeholder="search product..." // Placeholder text in the search box.
           classNames={{
             input:
-              "flex inline h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+              "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
             submitIcon: "hidden", // Hides the submit icon.
             form: "bg-blue-500 h-10 rounded-md", // Styles the form container.
             resetIcon: "hidden", // Hides the reset icon.
@@ -47,7 +48,7 @@ export default function AlgoliaSearch() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
-              className="absolute w-full mt-2  max-h-96 overflow-y-auto z-50"
+              className="absolute w-full mt-2 max-h-96 overflow-y-auto z-50"
             >
               <Hits hitComponent={Hit} />
               {/* Renders search results */}

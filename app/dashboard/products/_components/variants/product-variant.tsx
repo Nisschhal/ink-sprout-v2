@@ -26,6 +26,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import InputTags from "./input-tags"
 import VariantImages from "./variant-images"
+import { VariantsWithImagesTags } from "@/lib/infer-type"
 
 type VariantProps = {
   children: React.ReactNode

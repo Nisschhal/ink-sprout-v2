@@ -13,12 +13,11 @@ export default function NavItem({ label, category }: NavItemProps) {
   const searchParams = useSearchParams()
   const tag = searchParams.get("tag")
 
-  const handleClick = () => {
-    if (tag) {
+  const handleClick = (category: string) => {
+    if (category) {
       router.push(`?tag=${category}`)
-    } else {
-      router.push("/")
     }
+    if (!category) router.push("/")
   }
   const active = category === tag
 
@@ -26,9 +25,9 @@ export default function NavItem({ label, category }: NavItemProps) {
     <div
       className={cn(
         "cursor-pointer hover:text-primary hover:opacity-100 my-2  rounded",
-        active ? "opacity-100 text-primary" : "opacity-50 text-gray-600"
+        active ? "opacity-100 text-primary" : "opacity-50"
       )}
-      onClick={handleClick}
+      onClick={() => handleClick(category)}
     >
       {label}
     </div>

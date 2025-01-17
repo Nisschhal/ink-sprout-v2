@@ -8,9 +8,9 @@ body {
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 36 88% 96%;
     --foreground: 224 71.4% 4.1%;
-    --card: 0 0% 100%;
+    --card: 36 88% 96%;
     --card-foreground: 224 71.4% 4.1%;
     --popover: 0 0% 100%;
     --popover-foreground: 224 71.4% 4.1%;
@@ -68,7 +68,7 @@ body {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-gradient-to-r from-[#FFFAF0] to-[#FFF8E1] dark:from-black  dark:to-black text-foreground;
   }
 }
 
