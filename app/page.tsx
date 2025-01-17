@@ -22,7 +22,6 @@ export default async function Home() {
 
   return (
     <main>
-      <AlgoliaSearch />
       <ProductTags />
       <Products variants={suffledList} />
     </main>

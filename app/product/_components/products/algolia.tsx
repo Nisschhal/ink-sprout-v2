@@ -47,7 +47,7 @@ export default function AlgoliaSearch() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
-              className="absolute w-full mt-2  max-h-96 overflow-y-auto z-20"
+              className="absolute w-full mt-2  max-h-96 overflow-y-auto z-50"
             >
               <Hits hitComponent={Hit} />
               {/* Renders search results */}

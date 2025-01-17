@@ -20,7 +20,7 @@ export default function ProductTags() {
       <Badge
         className={cn(
           "cursor-pointer bg-black hover:bg-black/75  hover:opacity-100 my-2",
-          !tag ? "opacity-100" : "opacity-50"
+          !tag ? "bg-black" : "bg-black/50"
         )}
         onClick={() => setFilter("")}
       >
@@ -28,8 +28,8 @@ export default function ProductTags() {
       </Badge>
       <Badge
         className={cn(
-          "z-10 cursor-pointer  bg-blue-500 hover:bg-blue-600   hover:opacity-100 my-2",
-          tag && tag === "blue" ? "opacity-100" : "opacity-50"
+          "cursor-pointer bg-blue-500 hover:bg-blue-500/75  hover:opacity-100 my-2",
+          tag === "blue" ? "bg-blue-500" : "bg-blue-500/50"
         )}
         onClick={() => setFilter("blue")}
       >
@@ -37,21 +37,39 @@ export default function ProductTags() {
       </Badge>
       <Badge
         className={cn(
-          "cursor-pointer bg-green-500 hover:bg-green-600  hover:opacity-100 my-2",
-          tag && tag === "green" ? "opacity-100" : "opacity-50"
+          "cursor-pointer bg-pink-500 hover:bg-pink-500/75  hover:opacity-100 my-2",
+          tag === "pink" ? "bg-pink-500" : "bg-pink-500/50"
         )}
-        onClick={() => setFilter("green")}
+        onClick={() => setFilter("pink")}
       >
-        Green
+        Pink
       </Badge>
       <Badge
         className={cn(
-          "cursor-pointer bg-purple-500 hover:bg-purple-600   hover:opacity-100 my-2",
-          tag && tag === "purple" ? "opacity-100" : "opacity-50"
+          "cursor-pointer bg-orange-500 hover:bg-orange-500/75  hover:opacity-100 my-2",
+          tag === "orange" ? "bg-orange-500" : "bg-orange-500/50"
+        )}
+        onClick={() => setFilter("orange")}
+      >
+        Orange
+      </Badge>
+      <Badge
+        className={cn(
+          "cursor-pointer bg-purple-500 hover:bg-purple-500/75  hover:opacity-100 my-2",
+          tag === "purple" ? "bg-purple-500" : "bg-purple-500/50"
         )}
         onClick={() => setFilter("purple")}
       >
         Purple
+      </Badge>
+      <Badge
+        className={cn(
+          "cursor-pointer bg-green-500 hover:bg-green-500/75  hover:opacity-100 my-2",
+          tag === "green" ? "bg-green-500" : "bg-green-500/50"
+        )}
+        onClick={() => setFilter("green")}
+      >
+        Green
       </Badge>
     </div>
   )

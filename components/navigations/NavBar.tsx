@@ -4,17 +4,21 @@ import { currentUser } from "@/lib/session-user"
 import { Logo } from "./Logo"
 import CartDrawer from "@/app/product/_components/cart/cart-drawer"
 import Categories from "./Categories"
+import AlgoliaSearch from "@/app/product/_components/products/algolia"
 
 export default async function NavBar() {
   const user = await currentUser()
   return (
-    <header className="sticky z-100 top-0 py-8 w-full ">
+    <header className="sticky z-100 top-0 py-8 w-full backdrop-blur-md">
       <nav className=" ">
         <ul className="flex justify-between items-center md:gap-8 gap-4">
           <li className="flex flex-1">
             <Link href="/" aria-label="sprout and scribble logo">
               <Logo />
             </Link>
+          </li>
+          <li className="flex-1">
+            <AlgoliaSearch />
           </li>
           <li>
             <Categories />
