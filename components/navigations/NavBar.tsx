@@ -5,6 +5,7 @@ import { Logo } from "./Logo"
 import CartDrawer from "@/app/product/_components/cart/cart-drawer"
 import Categories from "./Categories"
 import AlgoliaSearch from "@/app/product/_components/products/algolia"
+import { MenuIcon } from "lucide-react"
 
 export default async function NavBar() {
   const user = await currentUser()
