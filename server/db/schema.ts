@@ -141,6 +141,7 @@ export const products = pgTable("products", {
   title: text("title").notNull(), // Product title
   created: timestamp("created").defaultNow(), // Timestamp when the product was created
   price: real("price").notNull(), // Product price
+  createdBy: text("userId").references(() => users.id, { onDelete: "cascade" }),
 })
 
 // --------- PRODUCT VARIANTS MODEL: Represents different variations of a product (e.g., color, size)
@@ -178,9 +179,14 @@ export const variantTags = pgTable("variantTags", {
 // ~~~~~~~~~~~~~~~~  Relations ~~~~~~~~~~~~~~~~~ //
 
 // PRODUCTS RELATION to reviews and variants (one-to-many relation)
-export const productRelations = relations(products, ({ many }) => ({
+export const productRelations = relations(products, ({ many, one }) => ({
   productVariants: many(productVariants, { relationName: "productVariants" }), // One product has many variants
   reviews: many(reviews, { relationName: "reviews" }), // One product has many reviews
+  users: one(users, {
+    relationName: "productUsers",
+    fields: [products.createdBy],
+    references: [users.id],
+  }),
 }))
 
 // PRODUCT VARIANTS RELATION to product and variant images/tags (one-to-one and one-to-many relations)

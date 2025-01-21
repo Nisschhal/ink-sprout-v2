@@ -15,7 +15,7 @@ export default function Categories() {
   const toggleMenu = () => setMenuOpen(!menuOpen)
   const closeMenu = () => setMenuOpen(false)
   const handleRoute = (tag: string) => {
-    router.push(`?tag=${tag}`)
+    router.push(`/?tag=${tag}`)
     setMenuOpen(false)
   }
   return (

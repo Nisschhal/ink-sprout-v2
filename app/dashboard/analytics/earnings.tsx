@@ -71,7 +71,7 @@ export default function Earnings({
   return (
     <Card className="flex-1 shrink-0 h-full">
       <CardHeader>
-        <CardTitle>Your Revenue: ${activeTotal}</CardTitle>
+        <CardTitle>Total Revenue: ${activeTotal}</CardTitle>
         <CardDescription>Here are your recent earnings</CardDescription>
         <div className="flex items-center gap-2">
           <Badge

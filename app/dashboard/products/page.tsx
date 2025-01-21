@@ -11,6 +11,9 @@ import { auth } from "@/server/auth"
 import { redirect } from "next/navigation"
 import { DataTable } from "./_components/table/data-table"
 import { columns } from "./_components/table/columns"
+import { eq } from "drizzle-orm"
+import { product } from "../add-product/_actions/product"
+import { products } from "@/server/db/schema"
 
 export default async function Products() {
   // Get the User and see if it's admin, if not redirect to setting page
@@ -23,6 +26,8 @@ export default async function Products() {
     with: {
       productVariants: { with: { variantImages: true, variantTags: true } },
     },
+    where: eq(products.createdBy, session.user.id!),
+
     orderBy: (products, { desc }) => [desc(products.id)],
   })
 

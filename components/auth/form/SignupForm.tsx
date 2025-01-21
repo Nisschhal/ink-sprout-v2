@@ -12,11 +12,13 @@ import {
   FormMessage,
 } from "../../ui/form"
 import { Input } from "../../ui/input"
-import { useState, useTransition } from "react"
+import { useEffect, useState, useTransition } from "react"
 import { Checkbox } from "../../ui/checkbox"
 import { Button } from "../../ui/button"
 import { signup } from "@/app/auth/_actions/signup"
 import { Error, Success } from "../../alert"
+import { useSearchParams } from "next/navigation"
+import Link from "next/link"
 
 const initialValues = {
   email: "",
@@ -25,6 +27,10 @@ const initialValues = {
 }
 
 export function SignupForm() {
+  const searchParams = useSearchParams()
+
+  const role = searchParams.get("role") === "admin" ? "admin" : "user"
+
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [success, setSuccess] = useState<string>("")
   const [error, setError] = useState<string>("")
@@ -41,7 +47,7 @@ export function SignupForm() {
     // const [serverState, signupAction, isPending] = useActionState(signup, null)
 
     startTransition(async () => {
-      const { success, error } = await signup(values)
+      const { success, error } = await signup({ ...values, role })
       if (success) setSuccess(success)
       if (error) setError(error)
     })
@@ -136,6 +142,14 @@ export function SignupForm() {
           </Button>
         </form>
       </Form>
+      <div>
+        <Link
+          href={"/auth/signup?role=admin"}
+          className="text-sm text-muted-foreground hover:text-primary hover:underline mt-1"
+        >
+          Signup as admin?
+        </Link>
+      </div>
     </CardWrapper>
   )
 }

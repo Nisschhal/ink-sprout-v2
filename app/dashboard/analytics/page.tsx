@@ -34,9 +34,9 @@ export default async function Analytics() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Your Analytics</CardTitle>
+        <CardTitle>View Analytics</CardTitle>
         <CardDescription>
-          Check your sales, new customers, and more...
+          Check sales, new customers, and more...
         </CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col lg:flex-row gap-8 ">

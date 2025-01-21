@@ -20,6 +20,7 @@ export const signupSchema = z.object({
     .string({ message: "Password is required! 👀" })
     .min(5, "Password must be at least 5 characters long! 😉"),
   name: z.string().min(3, "Name must be of atleast 3 character long! 😉"),
+  role: z.optional(z.string()),
 })
 
 export type signupSchemaType = z.infer<typeof signupSchema>

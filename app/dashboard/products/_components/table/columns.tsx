@@ -49,7 +49,7 @@ const ActionCell = ({ row }: { row: Row<ProductColumns> }) => {
       }
     },
     onExecute: () => {
-      toast.info("Product deleting...", { duration: 2000 })
+      toast.info("Product deleting...", { duration: 1000 })
     },
   })
 
