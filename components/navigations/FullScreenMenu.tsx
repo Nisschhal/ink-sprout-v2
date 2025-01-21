@@ -68,7 +68,7 @@ export const navItems = [
   },
   {
     title: "Notebook",
-    href: "/?tag=Notebook",
+    href: "/?tag=notebook",
   },
   {
     title: "Bag",
