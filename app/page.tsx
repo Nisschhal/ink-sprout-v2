@@ -7,15 +7,19 @@ import shuffleList from "@/lib/suffle-list"
 export const revalidate = 3600 // 60*5
 
 export default async function Home() {
-  const productVariantsData = await db.query.productVariants.findMany({
-    with: {
-      variantImages: true,
-      variantTags: true,
-      products: true,
-    },
-    orderBy: (productVariants, { desc }) => [desc(productVariants.id)],
-  })
-
+  let productVariantsData
+  try {
+    productVariantsData = await db.query.productVariants.findMany({
+      with: {
+        variantImages: true,
+        variantTags: true,
+        products: true,
+      },
+      orderBy: (productVariants, { desc }) => [desc(productVariants.id)],
+    })
+  } catch (error) {
+    console.log("Error getting product variants for homepage", error)
+  }
   // suffle list on each rendered
   const suffledList = shuffleList(productVariantsData)
 

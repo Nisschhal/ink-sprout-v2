@@ -13,7 +13,7 @@ export default function AlgoliaSearch() {
   // Search Bar Active State
   const [active, setActive] = useState(false)
   // Create Memo motionCart
-  const MotionCard = useMemo(() => motion(Card), [])
+  const MotionCard = useMemo(() => motion.create(Card), [])
 
   return (
     <InstantSearchNext
