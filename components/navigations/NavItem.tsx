@@ -17,7 +17,7 @@ export default function NavItem({ label, category }: NavItemProps) {
     if (category) {
       router.push(`?tag=${category}`)
     }
-    if (!category) router.push("/")
+    if (!category || category == "all") router.push("/")
   }
   const active = category == tag
 

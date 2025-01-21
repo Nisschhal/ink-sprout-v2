@@ -30,7 +30,7 @@ export default function Categories() {
       </div>
 
       {/* Mobile Menu Toggle */}
-      <div className="sm:hidden">
+      {/* <div className="sm:hidden">
         <button
           onClick={toggleMenu}
           className="flex items-center p-2 cursor-pointer text-gray-700 dark:text-white"
@@ -38,9 +38,9 @@ export default function Categories() {
         >
           <MenuIcon />
         </button>
-      </div>
+      </div> */}
 
-      <AnimatePresence>
+      {/* <AnimatePresence>
         {menuOpen && (
           <motion.div
             animate={{
@@ -109,15 +109,15 @@ export default function Categories() {
             </div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
 
       {/* Overlay */}
-      {menuOpen && (
+      {/* {menuOpen && (
         <div
           onClick={closeMenu}
           className="fixed inset-0 bg-black opacity-50 z-40 pointer-events-auto"
         ></div>
-      )}
+      )} */}
     </div>
   )
 }

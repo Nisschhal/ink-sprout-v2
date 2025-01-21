@@ -40,8 +40,8 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <NavBar user={session?.user} />
             <div className="flex-grow px-6 md:px-12 max-w-8xl mx-auto">
-              <NavBar />
               <Toasty />
               {children}
             </div>
