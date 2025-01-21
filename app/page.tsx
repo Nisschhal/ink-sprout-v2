@@ -4,7 +4,7 @@ import Products from "./product/_components/products/products"
 import shuffleList from "@/lib/suffle-list"
 
 // revalidate cache on each 2
-export const revalidate = 60 * 60
+export const revalidate = 3600 // 60*5
 
 export default async function Home() {
   const productVariantsData = await db.query.productVariants.findMany({
