@@ -49,12 +49,7 @@ export function ReviewsForm({ productId }: { productId: number }) {
         toast.success(data.success)
         form.reset()
       }
-      if (data?.warning) {
-        toast.warning(data.warning)
-      }
-      if (data?.info) {
-        toast.info(data.info)
-      }
+
       if (data?.error) {
         toast.error(data.error)
       }
