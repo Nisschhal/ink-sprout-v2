@@ -37,11 +37,11 @@ export default function FullScreenMenu({
               custom={index}
               key={index}
               onClick={() => setOpen(!open)}
-              className="text-black"
+              className="text-black "
             >
               <Link
                 href={href}
-                className="text-[40px] font-medium dark:text-white"
+                className="text-[40px] font-medium dark:text-white hover:scale-110 duration-300 "
               >
                 {title}
               </Link>
