@@ -20,9 +20,9 @@ export default async function Home() {
   const suffledList = shuffleList(productVariantsData)
 
   return (
-    <main>
+    <>
       <ProductTags />
       <Products variants={suffledList} />
-    </main>
+    </>
   )
 }
