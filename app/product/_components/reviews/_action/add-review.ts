@@ -14,7 +14,7 @@ export const addReview = action
   .action(async ({ parsedInput: { rating, comment, productId } }) => {
     try {
       const session = await auth()
-      if (!session) return { info: "Please sign in to add review! 🤗" }
+      if (!session) return { error: "Please sign in to add review! 🤗" }
 
       const reviewExist = await db.query.reviews.findFirst({
         where: and(
@@ -24,7 +24,7 @@ export const addReview = action
       })
 
       if (reviewExist)
-        return { warning: "You have already reviewed this product! 🤭" }
+        return { error: "You have already reviewed this product! 🤭" }
       const newReview = await db
         .insert(reviews)
         .values({
