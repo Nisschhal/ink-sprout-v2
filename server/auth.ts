@@ -9,10 +9,30 @@ import { eq } from "drizzle-orm"
 import Credentails from "next-auth/providers/credentials"
 import { loginSchema } from "@/types/schemas"
 import bcryptjs from "bcryptjs"
+import Stripe from "stripe"
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: DrizzleAdapter(db),
   session: { strategy: "jwt" },
   events: {
+    // Triggered when a new user is created
+    // createUser: async ({ user }) => {
+    //   // Initialize Stripe with the API secret
+    //   const stripe = new Stripe(process.env.STRIPE_SECRET!, {
+    //     apiVersion: "2024-12-18.acacia",
+    //   })
+
+    //   // Create a new customer in Stripe using the user's email and name
+    //   const customer = await stripe.customers.create({
+    //     email: user.email!, // Ensure email is provided
+    //     name: user.name!, // Ensure name is provided
+    //   })
+
+    //   // Update the user's record in the database with the Stripe customer ID
+    //   await db
+    //     .update(users)
+    //     .set({ customerId: customer.id }) // Add Stripe's customer ID
+    //     .where(eq(users.id, user.id!)) // Match the user by ID
+    // },
     async linkAccount({ user }) {
       if (!user.id) {
         console.error("User ID is undefined in linkAccount.")

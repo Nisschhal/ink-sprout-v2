@@ -52,7 +52,7 @@ const Tiptap = ({ val }: { val: string }) => {
   // Register the value in the editor if it is empty
   useEffect(() => {
     if (editor?.isEmpty) editor.commands.setContent(val)
-  }, [val])
+  }, [])
 
   // get the useFormContext to pass the value to the form 'description field'
   const { setValue } = useFormContext()

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import { menuSlide, slide } from "@/lib/animation"
+import { slide } from "@/lib/animation"
 import { AnimatePresence } from "framer-motion"
 import { Logo } from "./Logo"
 import { MenuIcon, X } from "lucide-react"
@@ -53,7 +53,7 @@ export default function FullScreenMenu({
   )
 }
 
-const navItems = [
+export const navItems = [
   {
     title: "Home",
     href: "/",

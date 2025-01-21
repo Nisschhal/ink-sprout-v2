@@ -12,7 +12,6 @@ import { redirect } from "next/navigation"
 import { DataTable } from "./_components/table/data-table"
 import { columns } from "./_components/table/columns"
 import { eq } from "drizzle-orm"
-import { product } from "../add-product/_actions/product"
 import { products } from "@/server/db/schema"
 
 export default async function Products() {

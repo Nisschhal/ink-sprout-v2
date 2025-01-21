@@ -17,8 +17,6 @@ import {
 } from "@/components/ui/table"
 import { TotalOrders } from "@/lib/infer-type"
 import Image from "next/image"
-import placeholder from "@/public/placeholder_user.jpg"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 export default function Sales({ totalOrders }: { totalOrders: TotalOrders[] }) {
   return (
     <Card className="flex-1 shrink-0">
@@ -39,16 +37,7 @@ export default function Sales({ totalOrders }: { totalOrders: TotalOrders[] }) {
           </TableHeader>
           <TableBody>
             {totalOrders.map(
-              ({
-                orders,
-                products,
-                productVariants,
-                orderId,
-                productId,
-                productVariantId,
-                id,
-                quantity,
-              }) => (
+              ({ orders, products, productVariants, id, quantity }) => (
                 <TableRow key={id}>
                   <TableCell className="font-medium">
                     {orders.users.image && orders.users.name ? (

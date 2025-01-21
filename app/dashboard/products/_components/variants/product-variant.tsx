@@ -77,7 +77,7 @@ export default function ProductVariant({
 
   useEffect(() => {
     setEdit()
-  }, [variant])
+  }, [])
 
   const { execute, status } = useAction(createVariant, {
     onExecute() {

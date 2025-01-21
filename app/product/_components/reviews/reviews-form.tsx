@@ -30,7 +30,7 @@ import { addReview } from "./_action/add-review"
 import { Textarea } from "@/components/ui/textarea"
 export function ReviewsForm({ productId }: { productId: number }) {
   const searchParams = useSearchParams()
-  const variantId = Number(searchParams.get("id"))
+  // const variantId = Number(searchParams.get("id"))
 
   // 1. Define your form.
   const form = useForm<ReviewSchemaType>({

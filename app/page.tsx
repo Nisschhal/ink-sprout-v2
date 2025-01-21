@@ -1,7 +1,6 @@
 import { db } from "@/server"
 import ProductTags from "./product/_components/products/product-tags"
 import Products from "./product/_components/products/products"
-import AlgoliaSearch from "./product/_components/products/algolia"
 import shuffleList from "@/lib/suffle-list"
 
 // revalidate cache on each 2

@@ -132,7 +132,7 @@ export function DataTable<TData, TValue>({
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
-                You haven't contributed any products 🙃.
+                You haven&apos;t contributed any products 🤭.
               </TableCell>
             </TableRow>
           )}

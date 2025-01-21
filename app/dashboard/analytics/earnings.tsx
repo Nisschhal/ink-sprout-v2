@@ -52,7 +52,7 @@ export default function Earnings({
     if (filter === "month") {
       return monthly
     }
-  }, [filter])
+  }, [])
 
   // totalPrice: Weekly || Monthly
   const activeTotal = useMemo(() => {
@@ -66,7 +66,7 @@ export default function Earnings({
 
     // else reduct total price from this weekly data
     return weeklyChart(chartItems).reduce((acc, item) => acc + item.revenue, 0)
-  }, [filter])
+  }, [])
 
   return (
     <Card className="flex-1 shrink-0 h-full">

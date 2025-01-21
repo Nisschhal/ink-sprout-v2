@@ -1,6 +1,6 @@
 "use client"
 import { cn } from "@/lib/utils"
-import { useRouter, useSearchParams } from "next/navigation"
+import { redirect, useRouter, useSearchParams } from "next/navigation"
 import { motion } from "motion/react"
 
 type NavItemProps = {
@@ -15,7 +15,7 @@ export default function NavItem({ label, category }: NavItemProps) {
   const tag = searchParams.get("tag")
   const handleClick = (category: string) => {
     if (category) {
-      router.push(`?tag=${category}`)
+      redirect(`/?tag=${category}`)
     }
     if (!category || category == "all") router.push("/")
   }
