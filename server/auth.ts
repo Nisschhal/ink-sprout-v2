@@ -13,6 +13,8 @@ import Stripe from "stripe"
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: DrizzleAdapter(db),
   session: { strategy: "jwt" },
+  secret: process.env.AUTH_SECRET,
+
   events: {
     // Triggered when a new user is created
     // createUser: async ({ user }) => {
@@ -126,7 +128,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         return null
       },
     }),
-    Google,
-    Github,
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID!, // Google client ID from environment
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
+    Github({
+      clientId: process.env.GITHUB_CLIENT_ID!, // GitHub client ID
+      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+    }),
   ],
 })
