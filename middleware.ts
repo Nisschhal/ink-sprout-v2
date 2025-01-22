@@ -31,6 +31,7 @@ export default auth((req) => {
   if (isApiAuthRoute) {
     return
   }
+  
   if (isApiUploadethingPrefix) {
     return
   }

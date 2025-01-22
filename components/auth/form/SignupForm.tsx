@@ -142,14 +142,16 @@ export function SignupForm() {
           </Button>
         </form>
       </Form>
-      <div>
-        <Link
-          href={"/auth/signup?role=admin"}
-          className="text-sm text-muted-foreground hover:text-primary hover:underline mt-1"
-        >
-          Signup as admin?
-        </Link>
-      </div>
+      {role !== "admin" && (
+        <div>
+          <Link
+            href={"/auth/signup?role=admin"}
+            className="text-sm text-muted-foreground hover:text-primary hover:underline mt-1"
+          >
+            Signup as admin?
+          </Link>
+        </div>
+      )}
     </CardWrapper>
   )
 }
