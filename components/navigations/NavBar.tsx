@@ -2,13 +2,11 @@
 import Link from "next/link"
 
 import { UserButton } from "../user-button/UserButton"
-import { currentUser } from "@/lib/session-user"
 import { Logo } from "./Logo"
 import CartDrawer from "@/app/product/_components/cart/cart-drawer"
 import Categories from "./Categories"
 import AlgoliaSearch from "@/app/product/_components/products/algolia"
 import { MenuIcon, X } from "lucide-react"
-import { User } from "next-auth"
 import { useState } from "react"
 import FullScreenMenu from "./FullScreenMenu"
 import { motion, AnimatePresence } from "motion/react"
