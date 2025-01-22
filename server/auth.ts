@@ -2,7 +2,7 @@ import NextAuth from "next-auth"
 import { DrizzleAdapter } from "@auth/drizzle-adapter"
 import { db } from "@/server"
 import Google from "next-auth/providers/google"
-import Github from "next-auth/providers/github"
+import GitHub from "next-auth/providers/github"
 import { getUserByEmail, getUserById } from "../data/user"
 import { accounts, users } from "./db/schema"
 import { eq } from "drizzle-orm"
@@ -129,7 +129,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         return null
       },
     }),
-    Google,
-    Github,
+    // Google OAuth provider
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID!, // Google client ID from environment
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!, // Google client secret
+    }),
+
+    // GitHub OAuth provider
+    GitHub({
+      clientId: process.env.GITHUB_CLIENT_ID!, // GitHub client ID
+      clientSecret: process.env.GITHUB_CLIENT_SECRET!, // GitHub client secret
+    }),
   ],
 })
